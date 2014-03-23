@@ -26,11 +26,12 @@ Mourner.prototype = {
     this.facing = "right";
   },
   /*
+  TODO
   update: function() {
-    //player movement reset
+    //enemy to follow player
     this.sprite.body.velocity = 0;
 
-    if (cursors.left.isDown) {
+    if (this.body.x > player.body) {
       //move to the left
       this.sprite.body.velocity.x = -150;
       if (this.facing != 'left') {
@@ -38,7 +39,7 @@ Mourner.prototype = {
         this.facing = 'left';
       }
     }
-    else if (cursors.right.isDown) {
+    else if (his.body.x < player.body) {
       //move to the right
       this.sprite.body.velocity.x = 150;
       if (this.facing != 'right') {
