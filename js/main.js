@@ -39,9 +39,12 @@ function create() {
   for (var x = 0; x < 6; x+= 1) {
     mounds.create(game.rnd.integerInRange(25, 775), 485, 'mound');
   }
-
+  
+  //creating an array of mourners to start
   mournerGroup = [];
-  mournerGroup.push(new mourner.create('male'));
+  for (var i = 0; i < 1; i+=1) {
+    mournerGroup.push(mourner.create('male'));
+  }
 
   //player creation
   player.create();
