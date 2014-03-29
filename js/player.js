@@ -15,20 +15,19 @@ Player.prototype = {
   create: function() {
     this.health = 5;
     this.alive = true;
-    this.sprite = game.add.sprite(400, 450,'ghost');
-    this.sprite.anchor.setTo(0.5, 0.5);
-    this.name = "me";
-    this.sprite.body.immovable = false;
+    this.sprite = game.add.sprite(400, 420,'ghost');
+    this.game.physics.enable(this.sprite);
+    this.sprite.anchor.setTo(0.5,0.5);
     this.sprite.body.collideWorldBounds = true;
-    this.sprite.body.bounce.setTo(1,1);
-    this.facing = "left"
+    this.sprite.body.bounce.y = 0.5;
+    this.facing = "right";
     this.cursors = game.input.keyboard.createCursorKeys();
+    console.log("Notice: input being listened");
   },
 
   update: function() {
     //player movement reset
-    this.sprite.body.velocity = 0;
-
+    this.sprite.body.velocity.x = 0;
     if (this.cursors.left.isDown) {
       //move to the left
       this.sprite.body.velocity.x = -150;

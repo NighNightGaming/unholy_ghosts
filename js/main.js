@@ -1,60 +1,47 @@
-//initializing game
-var game = new Phaser.Game(800, 600, Phaser.CANVAS, '', { preload: preload,
-create: create, update: update, render: render});
+var game = new Phaser.Game(800,600, Phaser.AUTO, '', { preload: preload, create: 
+  create, update: update });
 
-//my vars
-var floor = null;
-var mounds = null;
-var mourner = null;
-var mournerGroup = null;
-var player = null;
-
-//loading up the assets
 function preload() {
-
   game.load.image('sky', 'assets/sky.png');
 
   player = new Player(game);
   player.preload();
 
-  mourner = new Mourner(game);
-  mourner.preload();
-
+  enemy1 = new Mourner(game);
+  enemy1.preload();
   game.load.image('mound', 'assets/mound.png');
-  game.load.image('platform', 'assets/platform.png');
   game.load.image('coffin', 'assets/coffin.png');
-
+  game.load.image('platform', 'assets/platform.png');
+  game.load.image('ground', 'assets/ground.png');
+  console.log("Notice: Assets loaded");
 }
 
-
 function create() {
-
-  //word creation
+  //world creation
   game.add.sprite(0,0, 'sky');
-  game.add.sprite(400, 425, 'platform').anchor.setTo(0.5, 0.5);
-  game.add.sprite(410, 450, 'coffin').anchor.setTo(0.5, 0.5);
-  floor = new Phaser.Rectangle(0, 525, 800, 75);
+  game.add.sprite(0,500, 'ground');
+  game.add.sprite(400,400, 'platform').anchor.setTo(0.5,0.5);
+  game.add.sprite(410,425, 'coffin').anchor.setTo(0.5,0.5);
+  console.log("Notice: World created");
 
   mounds = game.add.group();
-  for (var x = 0; x < 6; x+= 1) {
-    mounds.create(game.rnd.integerInRange(25, 775), 485, 'mound');
+  for (var i = 0; i < 5; i += 1) {
+    var mound = mounds.create(game.rnd.integerInRange(25, 700), 480, 'mound');
+    mound.anchor.setTo(0.5,0.5);
   }
-  
-  //creating an array of mourners to start
-  mournerGroup = [];
-  for (var i = 0; i < 1; i+=1) {
-    mournerGroup.push(mourner.create('male'));
-  }
+  console.log("Notice: Mounds created");
 
   //player creation
   player.create();
+  console.log("Notice: Player created");
+
+    //enemy creation 
+
+  enemy1.create("female");
+  console.log("Notice: Mourners created");
 }
 
 function update() {
   player.update();
-}
-
-function render() {
-  game.debug.renderRectangle(floor, '#23A315');
-
+  enemy1.update(player);
 }
