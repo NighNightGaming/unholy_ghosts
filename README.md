@@ -12,10 +12,10 @@ Level: Intermediate
 
 Idea
 ----
-	An angry ghost stumbles upon a funeral. Indignated that mortals
+An angry ghost stumbles upon a funeral. Indignated that mortals
 walk on its home, the ghost posseses the corpes. It breaks through the funeral and begins to terrorize the graveyard.
-	In mortal form, the player  is vulnerable to the attacks of the  mortals. If his health (or plasma-link) is depleted entirely, the ghost is ejected from the host.
-	In ghost form, the player is under a time limit to find a new host while also in danger of being grabbed by one of the "demon hands." While technically, lives are infinite, the amount of demon hands grows exponentially with the amount of "ejections." 
+In mortal form, the player  is vulnerable to the attacks of the  mortals. If his health (or plasma-link) is depleted entirely, the ghost is ejected from the host.
+In ghost form, the player is under a time limit to find a new host while also in danger of being grabbed by one of the "demon hands." While technically, lives are infinite, the amount of demon hands grows exponentially with the amount of "ejections." 
  
 Game Characteristics:
 -------------------
