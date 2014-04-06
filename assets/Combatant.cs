@@ -8,6 +8,8 @@ public class Combatant : MonoBehaviour {
 	public bool corpse = false;
 	public bool possesed = false;
 	public Color zombieColor = Color.green;
+	public float corpseTimer = 2.0f;
+
 	// Use this for initialization
 	void Start () {
 	}
@@ -20,6 +22,8 @@ public class Combatant : MonoBehaviour {
 		possesed = true;
 		GetComponent<SpriteRenderer> ().color = zombieColor;
 		health = maxHealth;
+		GetComponent<SpriteRenderer> ().sortingOrder = 2;	
+
 	}
 	/// <summary>
 	/// Checks the ghost.
@@ -58,14 +62,13 @@ public class Combatant : MonoBehaviour {
 		deathAnim (!corpse);
 		if (health <= 0) {
 			corpse = true;
-			//tween to lie down
-			if (possesed) {
-				Destroy (gameObject);
-				//theGhost.activate
-				//theGhost.deaths += 1;
+			checkGhost();
+		} 
+		if (corpse) {
+			if (corpseTimer > 0) {
+				corpseTimer -= Time.deltaTime;
 			} else {
-				checkGhost();
-
+				Destroy(gameObject);
 			}
 		}
 	}

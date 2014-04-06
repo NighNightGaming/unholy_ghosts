@@ -15,6 +15,7 @@ public class EnemyMove : MonoBehaviour
 	public bool possessed = false;
 	public string facing = "right";
 	private Combatant combatant;
+	public float jumpTimer = 1.0f;
 	/// <summary>
 	/// Raises the level was loaded event.
 	/// </summary>
@@ -67,17 +68,26 @@ public class EnemyMove : MonoBehaviour
 			if(Input.GetKey(KeyCode.LeftArrow)) {
 				rigidbody2D.velocity = new Vector2(-2.5f, 0.0f);
 				if (facing != "left") {
-					transform.localScale = new Vector2(-7, 7);
+					transform.localScale = new Vector2(-8, 8);
 					facing = "left";
 				}
 			}
 			else if(Input.GetKey(KeyCode.RightArrow)) {
 				rigidbody2D.velocity = new Vector2(2.5f, 0.0f);
 				if (facing != "right") {
-					transform.localScale = new Vector2(7,7);
+					transform.localScale = new Vector2(8,8);
 					facing = "right";
 				}
+			} 
+			if (jumpTimer > -1) {
+				jumpTimer -= Time.deltaTime;
 			}
+			if (jumpTimer <= 0) {
+				if(Input.GetKey(KeyCode.UpArrow)){
+					rigidbody2D.velocity = (new Vector2(0.0f,5.0f));
+					jumpTimer = 1.0f;
+				}
+			}	
 		}
 	}
 }

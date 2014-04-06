@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Attacking : MonoBehaviour {
-
+public class Attacking : MonoBehaviour
+{
+	
 	public bool possesed = false;
-	public LayerMask targetLayers;
+	private LayerMask targetLayers;
 	public float attackRange = 0.2f;
 	public float attackStr = 0.5f;
 	public float attackDmg = 20;
@@ -58,7 +59,7 @@ public class Attacking : MonoBehaviour {
 		attackTimer = attackFreq;
 		RaycastHit2D hit = Physics2D.Raycast (transform.position, dir, attackRange, targetLayers);
 		if (hit != null) {
-			if(hit.rigidbody != null) hit.rigidbody.velocity += dir * attackStr;
+			if(hit.rigidbody!= null) hit.rigidbody.velocity += dir * attackStr;
 			Combatant comb = hit.collider.GetComponent<Combatant>();
 			if(comb != null) comb.health -= attackDmg;
 		}

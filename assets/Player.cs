@@ -4,6 +4,7 @@ using System.Collections;
 public class Player : MonoBehaviour {
 	public bool possessing;
 	private int deaths = 0;
+	public int kills = 0;
 	public Transform demon;
 	public Transform mound;
 	public static GameObject player;
