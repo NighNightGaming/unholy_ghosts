@@ -1,11 +1,11 @@
 The Unholy Ghosts
 ================
 
-Language: Javascript
+Language: Javascript/C#
 --------------------
 Platform: Web
 ------------
-Tools: Phaser
+Tools: Unity
 ------------
 Level: Beginner 
 -------------------
@@ -35,7 +35,7 @@ Implementation Goals:
 
 Learning Goals:
 --------------
-	* Learn how to use Phaser/Javascript properly and efficiently
+	* Learn how to use Unity properly and efficiently
 	* Learn how to implement a single scene game.
 	* Learn how to implement a horde-spawn algorithm
 	* Learn how to implement delta-dependent conditions.
