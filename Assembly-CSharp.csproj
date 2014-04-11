@@ -49,6 +49,7 @@
      <Compile Include="Assets\GameScripts\Attacking.cs" />
      <Compile Include="Assets\GameScripts\Combatant.cs" />
      <Compile Include="Assets\GameScripts\EnemyMove.cs" />
+     <Compile Include="Assets\GameScripts\Hand.cs" />
      <Compile Include="Assets\GameScripts\Player.cs" />
      <Compile Include="Assets\GameScripts\Spawner.cs" />
      <Compile Include="Assets\GameScripts\killCounter.cs" />

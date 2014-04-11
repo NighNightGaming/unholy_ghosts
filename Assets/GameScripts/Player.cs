@@ -7,6 +7,7 @@ public class Player : MonoBehaviour {
 	public int kills = 0;
 	public Transform demon;
 	public Transform mound;
+	public bool gameOvel;
 	public static GameObject player;
 	// Use this for initialization
 	void Start () {
@@ -30,6 +31,9 @@ public class Player : MonoBehaviour {
 	void Update () {
 		if (possessing) {
 			toggleStatus();
+		}
+		if (gameOvel) {
+			Application.LoadLevel("gameOvel");
 		}
 	}
 }

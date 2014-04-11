@@ -52,6 +52,7 @@
      <Compile Include="Assets\MenuScripts\Aboutinfo.js" />
      <Compile Include="Assets\MenuScripts\Button.js" />
      <Compile Include="Assets\MenuScripts\Play.js" />
+     <Compile Include="Assets\MenuScripts\Retry.js" />
      <Compile Include="Assets\MenuScripts\Textcolor.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

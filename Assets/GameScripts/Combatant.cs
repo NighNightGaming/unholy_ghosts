@@ -56,14 +56,13 @@ public class Combatant : MonoBehaviour {
 		}
 		transform.rotation = Quaternion.RotateTowards(transform.rotation, target, step);
 	}
-	
 	// Update is called once per frame
 	void Update () {
 		deathAnim (!corpse);
 		if (health <= 0) {
 			corpse = true;
 			checkGhost();
-		} 
+		}
 		if (corpse) {
 			if (possesed) {
 				possesed = false;
@@ -73,7 +72,7 @@ public class Combatant : MonoBehaviour {
 			if (corpseTimer > 0) {
 				corpseTimer -= Time.deltaTime;
 			} else {
-				Player.player.GetComponent<Player>().kills += 	1;
+				Player.player.GetComponent<Player>().kills += 1;
 				Destroy(gameObject);
 			}
 		}
