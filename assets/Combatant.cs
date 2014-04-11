@@ -26,7 +26,7 @@ public class Combatant : MonoBehaviour {
 
 	}
 	/// <summary>
-	/// Checks the ghost.
+	/// Checks the ghost
 	/// </summary>
 	void checkGhost() {
 		Transform playerTran = Player.player.transform;
@@ -73,6 +73,7 @@ public class Combatant : MonoBehaviour {
 			if (corpseTimer > 0) {
 				corpseTimer -= Time.deltaTime;
 			} else {
+				Player.player.GetComponent<Player>().kills += 	1;
 				Destroy(gameObject);
 			}
 		}
