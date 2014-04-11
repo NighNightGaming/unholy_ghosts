@@ -19,8 +19,10 @@ public class Player : MonoBehaviour {
 	public void toggleStatus() {
 		if (gameObject.activeSelf) {
 			gameObject.SetActive(false);
+			gameObject.tag = "Possessing";
 		} else {
 			gameObject.SetActive(true);
+			gameObject.tag = "Player";
 			deaths += 1;
 		}
 	}
@@ -36,8 +38,8 @@ public class Player : MonoBehaviour {
 								Instantiate (demon, new Vector3 (randX, -3, 0), Quaternion.identity);
 						} else {
 								int randX = Random.Range (2, 16);
-								Instantiate (mound, new Vector3 (randX, -3, 0), Quaternion.identity);
-								Instantiate (demon, new Vector3 (randX, -3, 0), Quaternion.identity);
+								Instantiate (mound, new Vector3 (randX, 3, 0), Quaternion.identity);
+								Instantiate (demon, new Vector3 (randX, 3, 0), Quaternion.identity);
 						}
 				}
 		}

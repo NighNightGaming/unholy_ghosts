@@ -65,6 +65,11 @@ public class Combatant : MonoBehaviour {
 			checkGhost();
 		} 
 		if (corpse) {
+			if (possesed) {
+				possesed = false;
+				Player.player.GetComponent<Player>().possessing = false;
+				Player.player.GetComponent<Player>().toggleStatus();
+			}
 			if (corpseTimer > 0) {
 				corpseTimer -= Time.deltaTime;
 			} else {

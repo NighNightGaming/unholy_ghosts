@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{90200E24-F9FF-9B57-1EFB-1A71545549A8}</ProjectGuid>
+	<ProjectGuid>{0CDA4BD8-F22A-E866-C630-872DEA13AA54}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -50,6 +50,7 @@
      <Compile Include="Assets\Combatant.cs" />
      <Compile Include="Assets\EnemyMove.cs" />
      <Compile Include="Assets\Player.cs" />
+     <Compile Include="Assets\Spawner.cs" />
      <Compile Include="Assets\killCounter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
