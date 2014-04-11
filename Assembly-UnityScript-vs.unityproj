@@ -46,8 +46,13 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\controller.js" />
-     <Compile Include="Assets\timerScript.js" />
+     <Compile Include="Assets\GameScripts\InstructTime.js" />
+     <Compile Include="Assets\GameScripts\controller.js" />
+     <Compile Include="Assets\GameScripts\timerScript.js" />
+     <Compile Include="Assets\MenuScripts\Aboutinfo.js" />
+     <Compile Include="Assets\MenuScripts\Button.js" />
+     <Compile Include="Assets\MenuScripts\Play.js" />
+     <Compile Include="Assets\MenuScripts\Textcolor.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
