@@ -20,7 +20,6 @@ public class Player : MonoBehaviour {
 	public void toggleStatus() {
 		if (gameObject.activeSelf) {
 			gameObject.SetActive(false);
-			gameObject.tag = "Possessing";
 		} else {
 			gameObject.SetActive(true);
 			gameObject.tag = "Player";

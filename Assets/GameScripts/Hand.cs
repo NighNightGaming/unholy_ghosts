@@ -4,18 +4,16 @@ using System.Collections;
 public class Hand : MonoBehaviour {
 
 	private float diffX;
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per fram	e
-	void Update () {	
+	// Update is called once per frame
+	void FixedUpdate () {	
 		diffX = Mathf.Abs(Player.player.GetComponent<Transform> ().position.x - gameObject.transform.position.x);
-		if (diffX < 1 && gameObject.transform.position.y <= -2.45) {
-			rigidbody2D.velocity = (new Vector2(0.0f, 2f));
-		} else {
-			rigidbody2D.velocity = (new Vector2(0.0f, -1.5f));
+		if (diffX < 1 && gameObject.transform.position.y < -3.5 ) {
+			rigidbody2D.velocity = (new Vector2(0.0f, 7f));
 		}
 	}
+	void OnCollisionEnter2D( Collision2D coll ) {
+		if (coll.gameObject.tag == "Player") {
+			Application.LoadLevel("gameOvel");
+				}
+		}
 }

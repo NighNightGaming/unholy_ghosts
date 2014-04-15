@@ -17,10 +17,6 @@ public class Spawner : MonoBehaviour {
 	private bool spawn = false;
 	private float offset = 0f;
 	private int playerDeaths = 0;
-	// Use this for initialization
-	void Start () {
-	
-	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -58,7 +54,7 @@ public class Spawner : MonoBehaviour {
 			float playerX = Player.player.GetComponent<Transform>().position.x;
 			spawn = true;
 			offset = Random.Range(0.3f, 2.5f);
-			for (int x = 0; x < playerDeaths * 2; x+= 1) {
+			for (int x = 0; x < playerDeaths; x+= 1) {
 				if (x % 2 == 0) {
 					Instantiate(mound, new Vector3(playerX + offset, -2.983414f, 0), Quaternion.identity);
 					Instantiate(demon, new Vector3(playerX + offset, -3.121371f, 0), Quaternion.identity);
