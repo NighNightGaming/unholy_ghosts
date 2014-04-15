@@ -36,11 +36,12 @@ public class Attacking : MonoBehaviour
 		
 		if (possesed) {
 			if(Input.GetButtonDown("Fire2") || Input.GetKey("space")) {
+				print("Player attacking");
 				Attack();
 			}
 		} else {
 			EnemyMove em = GetComponent<EnemyMove>();
-			if (em.mobTarget != null || this != null) {
+			if (em.mobTarget != null && this != null) {
 				if(Mathf.Abs(em.mobTarget.transform.position.x - transform.position.x) <= attackRange) Attack();
 			}
 		}
@@ -49,7 +50,7 @@ public class Attacking : MonoBehaviour
 	void GetPossessed ()
 	{
 		possesed = true;
-		targetLayers = 1 << LayerMask.NameToLayer ("Enemies");
+		targetLayers = 1 << LayerMask.NameToLayer ("Enemy");
 		gameObject.layer = LayerMask.NameToLayer ("Player");
 	}
 	
@@ -60,8 +61,8 @@ public class Attacking : MonoBehaviour
 		
 		attackTimer = attackFreq;
 		RaycastHit2D hit = Physics2D.Raycast (transform.position, dir, attackRange, targetLayers);
-		if (hit != null) {
-			if(hit.rigidbody!= null) hit.rigidbody.velocity += dir * attackStr;
+		if (hit.rigidbody != null) {
+			hit.rigidbody.velocity += dir * attackStr;
 			Combatant comb = hit.collider.GetComponent<Combatant>();
 			if(comb != null) comb.health -= attackDmg;
 		}

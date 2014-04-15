@@ -43,7 +43,7 @@ public class Spawner : MonoBehaviour {
 			} else {
 				side = Random.Range(1,10);
 				if (side % 2 == 0) {
-					Instantiate (cop, new Vector3(Random.Range(2.5f,12.0f), -2.31614f, 0f), Quaternion.identity);
+					Instantiate( cop, new Vector3(Random.Range(2.5f,12.0f), -2.31614f, 0f), Quaternion.identity);
 				} else {
 					Instantiate( cop, new Vector3(Random.Range(-2,-12), -2.39389f, 0), Quaternion.identity);
 				}
@@ -53,7 +53,7 @@ public class Spawner : MonoBehaviour {
 		if (Player.player.GetComponent<Player> ().possessing == false && playerDeaths > 1 && spawn == false) {
 			float playerX = Player.player.GetComponent<Transform>().position.x;
 			spawn = true;
-			offset = Random.Range(0.3f, 2.5f);
+			offset = Random.Range(1f, 2.5f);
 			for (int x = 0; x < playerDeaths; x+= 1) {
 				if (x % 2 == 0) {
 					Instantiate(mound, new Vector3(playerX + offset, -2.983414f, 0), Quaternion.identity);

@@ -12,8 +12,9 @@ public class Hand : MonoBehaviour {
 		}
 	}
 	void OnCollisionEnter2D( Collision2D coll ) {
-		if (coll.gameObject.tag == "Player") {
-			Application.LoadLevel("gameOvel");
-				}
+		if (coll.gameObject.GetComponent<Player>().key == "ghost_sprite") {
+			print("You touched");
+				Application.LoadLevel("gameOvel");
 		}
+	}
 }

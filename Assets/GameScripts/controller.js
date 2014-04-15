@@ -21,12 +21,12 @@ function FixedUpdate () {
 	}
 	else if(Input.GetKey(KeyCode.DownArrow)) {
 		if (transform.position.y > -2.5) {
-		rigidbody2D.AddForce(Vector2(0, -3.0));
+		rigidbody2D.velocity = (Vector2(0, -3.0));
 		}
 	}
 	else if(Input.GetKey(KeyCode.UpArrow)) {
 		if (transform.position.y < -1) {
-		rigidbody2D.AddForce(Vector2(0, 3.0));
+		rigidbody2D.velocity = (Vector2(0, 3.0));
 		}
 	}
 }

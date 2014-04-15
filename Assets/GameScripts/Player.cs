@@ -8,6 +8,7 @@ public class Player : MonoBehaviour {
 	public Transform demon;
 	public Transform mound;
 	public bool gameOvel;
+	public string key = "ghost_sprite";
 	public static GameObject player;
 	// Use this for initialization
 	void Start () {
