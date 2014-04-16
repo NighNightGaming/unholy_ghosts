@@ -8,10 +8,11 @@ public class Combatant : MonoBehaviour {
 	public bool corpse = false;
 	public bool possesed = false;
 	public Color zombieColor = Color.green;
-	public float corpseTimer = 2.0f;
-
+	public float corpseTimer = 5.0f;
+	Player theGhost;
 	// Use this for initialization
 	void Start () {
+		theGhost = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 	}
 	/// <summary>
 	/// Gets the possessed.
@@ -29,12 +30,11 @@ public class Combatant : MonoBehaviour {
 	/// Checks the ghost
 	/// </summary>
 	void checkGhost() {
-		Transform playerTran = Player.player.transform;
-		float diffX = Mathf.Abs(playerTran.position.x - transform.position.x);
-		float diffY = Mathf.Abs (playerTran.transform.position.y - transform.position.y);
-		if (diffY < 1 && diffX < 1) {
+		float diffX = Mathf.Abs(theGhost.transform.position.x - transform.position.x);
+		float diffY = Mathf.Abs (theGhost.transform.position.y - transform.position.y);
+		if (diffY < 1 && diffX < 1 && !(theGhost.possessing)) {
 			SendMessage("GetPossessed");
-			Player.player.GetComponent<Player>().possessing = true;
+			theGhost.possessing = true;
 		}
 	}
 	/// <summary>
@@ -66,13 +66,13 @@ public class Combatant : MonoBehaviour {
 		if (corpse) {
 			if (possesed) {
 				possesed = false;
-				Player.player.GetComponent<Player>().possessing = false;
-				Player.player.GetComponent<Player>().toggleStatus();
+				theGhost.possessing = false;
+				theGhost.toggleStatus();
 			}
 			if (corpseTimer > 0) {
 				corpseTimer -= Time.deltaTime;
 			} else {
-				Player.player.GetComponent<Player>().kills += 1;
+				theGhost.kills += 1;
 				Destroy(gameObject);
 			}
 		}

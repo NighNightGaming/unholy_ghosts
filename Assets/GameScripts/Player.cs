@@ -5,10 +5,10 @@ public class Player : MonoBehaviour {
 	public bool possessing;
 	public int deaths = 1;
 	public int kills = 0;
-	public Transform demon;
-	public Transform mound;
 	public bool gameOvel;
 	public string key = "ghost_sprite";
+	public static float possessBuffer = 5.0f;
+	public float possessTimer = possessBuffer;
 	public static GameObject player;
 	// Use this for initialization
 	void Start () {
@@ -21,6 +21,7 @@ public class Player : MonoBehaviour {
 	public void toggleStatus() {
 		if (gameObject.activeSelf) {
 			gameObject.SetActive(false);
+			possessTimer = possessBuffer;
 		} else {
 			gameObject.SetActive(true);
 			gameObject.tag = "Player";
@@ -31,6 +32,8 @@ public class Player : MonoBehaviour {
 	void Update () {
 		if (possessing) {
 			toggleStatus();
+		} else {
+			possessTimer -= Time.deltaTime;
 		}
 		if (gameOvel) {
 			Application.LoadLevel("gameOvel");

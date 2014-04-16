@@ -2,19 +2,24 @@
 using System.Collections;
 
 public class Hand : MonoBehaviour {
-
+	public float range = 100f;
 	private float diffX;
+	private LayerMask targetLayers; 
+
+	void Start () {
+				targetLayers = 1 << LayerMask.NameToLayer ("Player");
+		}
 	// Update is called once per frame
-	void FixedUpdate () {	
+	void FixedUpdate () {
+		RaycastHit2D reach = Physics2D.Raycast (transform.position, Vector2.up, range, targetLayers);
 		diffX = Mathf.Abs(Player.player.GetComponent<Transform> ().position.x - gameObject.transform.position.x);
-		if (diffX < 1 && gameObject.transform.position.y < -3.5 ) {
+		if (diffX < 1 && gameObject.transform.position.y < -3.5) {
 			rigidbody2D.velocity = (new Vector2(0.0f, 7f));
-		}
-	}
-	void OnCollisionEnter2D( Collision2D coll ) {
-		if (coll.gameObject.GetComponent<Player>().key == "ghost_sprite") {
-			print("You touched");
+			if (reach.rigidbody != null) {
+				print("You touched");
 				Application.LoadLevel("gameOvel");
+			}
 		}
+
 	}
 }

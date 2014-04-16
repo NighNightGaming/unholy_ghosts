@@ -9,9 +9,7 @@ public class Attacking : MonoBehaviour
 	public float attackRange = 0.2f;
 	public float attackStr = 0.5f;
 	public float attackDmg = 20;
-	
 	private float attackTimer = 0;
-	
 	public float attackFreq = 0.5f;
 	
 	Vector2 dir;
@@ -31,7 +29,7 @@ public class Attacking : MonoBehaviour
 		
 		if (rigidbody2D.velocity.x < 0)
 			dir = Vector2.right * -1;
-		if (rigidbody2D.velocity.x > 0)
+		else
 			dir = Vector2.right;
 		
 		if (possesed) {
@@ -59,7 +57,7 @@ public class Attacking : MonoBehaviour
 		if (attackTimer > 0)
 			return;
 		
-		attackTimer = attackFreq;
+		attackTimer = attackFreq;	
 		RaycastHit2D hit = Physics2D.Raycast (transform.position, dir, attackRange, targetLayers);
 		if (hit.rigidbody != null) {
 			hit.rigidbody.velocity += dir * attackStr;
