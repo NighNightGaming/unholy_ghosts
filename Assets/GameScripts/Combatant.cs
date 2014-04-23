@@ -4,13 +4,15 @@ using System.Collections;
 public class Combatant : MonoBehaviour {
 
 	public static int corpseCount = 0;
-
+	public GameObject Timer;
 	public float maxHealth = 100;
 	public float health = 100;    
 	public bool corpse = false;
 	public bool possesed = false;
 	public Color zombieColor = Color.green;
-	public float corpseTimer = 5.0f;
+	public float removeTimer = 5.0f;
+	private bool activated;
+	private GameObject newTimer;
 	Player theGhost;
 	// Use this for initialization
 	void Start () {
@@ -26,6 +28,7 @@ public class Combatant : MonoBehaviour {
 		GetComponent<SpriteRenderer> ().color = zombieColor;
 		health = maxHealth;
 		GetComponent<SpriteRenderer> ().sortingOrder = 2;	
+		Destroy (newTimer);
 
 	}
 	/// <summary>
@@ -37,6 +40,13 @@ public class Combatant : MonoBehaviour {
 		if (diffY < 1 && diffX < 1 && !(Player.player.possessing)) {
 			SendMessage("GetPossessed");
 			theGhost.possessing = true;
+		}
+	}
+
+	void startTimer (bool activated) {
+		if (activated) {
+			newTimer = (GameObject) Instantiate(Timer, new Vector3(transform.position.x,transform.position.y + 2f, 0), Quaternion.identity);
+			newTimer.GetComponent<corpseTimer>().corpse = this;
 		}
 	}
 	/// <summary>
@@ -65,9 +75,12 @@ public class Combatant : MonoBehaviour {
 			if(!corpse) {
 				corpseCount++;
 				Debug.Log("Died: New corpse count is " + corpseCount);
+				activated = true;
 			}
 			corpse = true;
 			checkGhost();
+			startTimer(activated);
+			activated = false;
 		}
 		if (corpse) {
 			if (possesed) {
@@ -75,15 +88,16 @@ public class Combatant : MonoBehaviour {
 				theGhost.possessing = false;
 				theGhost.toggleStatus();
 			}
-			if (corpseTimer > 0) {
-				corpseTimer -= Time.deltaTime;
+			if (removeTimer > 0) {
+				removeTimer -= Time.deltaTime;
 			} else {
 				theGhost.kills += 1;
 				corpseCount--;
 				Debug.Log("Despawned: New corpse count is " + corpseCount);
 				if(corpseCount <= 0) {
-					Application.LoadLevel("gameOvel");
+					Application.LoadLevel("nocorpse");
 				}
+				Destroy (newTimer);
 				Destroy(gameObject);
 			}
 		}
