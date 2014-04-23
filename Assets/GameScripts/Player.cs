@@ -9,11 +9,23 @@ public class Player : MonoBehaviour {
 	public string key = "ghost_sprite";
 	public static float possessBuffer = 5.0f;
 	public float possessTimer = possessBuffer;
-	public static GameObject player;
+	public static Player player;
+
+	public Rect grabBounds;
+	
+	
+	public Rect transformedGrabBounds() {
+		Rect result = grabBounds;
+		result.center += (Vector2) transform.position;
+		result.center -= new Vector2 (result.width / 2, result.height / 2);
+		return result;
+	}
+
+
 	// Use this for initialization
 	void Start () {
 		possessing = false;
-		player = gameObject;
+		player = this;
 	}
 	/// <summary>
 	/// Toggles the status.
@@ -28,6 +40,9 @@ public class Player : MonoBehaviour {
 			deaths += 1;
 		}
 	}
+
+	public 
+
 	// Update is called once per frame
 	void Update () {
 		if (possessing) {
@@ -38,5 +53,11 @@ public class Player : MonoBehaviour {
 		if (gameOvel) {
 			Application.LoadLevel("gameOvel");
 		}
+	}
+
+	
+	void OnDrawGizmos() {
+		Gizmos.color = Color.red;
+		Gizmos.DrawWireCube(transformedGrabBounds().center, new Vector3(grabBounds.width, grabBounds.height, 0));
 	}
 }

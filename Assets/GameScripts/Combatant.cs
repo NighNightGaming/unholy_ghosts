@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿	using UnityEngine;
 using System.Collections;
 
 public class Combatant : MonoBehaviour {
-	
+
+	public static int corpseCount = 0;
+
 	public float maxHealth = 100;
 	public float health = 100;    
 	public bool corpse = false;
@@ -30,9 +32,9 @@ public class Combatant : MonoBehaviour {
 	/// Checks the ghost
 	/// </summary>
 	void checkGhost() {
-		float diffX = Mathf.Abs(theGhost.transform.position.x - transform.position.x);
-		float diffY = Mathf.Abs (theGhost.transform.position.y - transform.position.y);
-		if (diffY < 1 && diffX < 1 && !(theGhost.possessing)) {
+		float diffX = Mathf.Abs(Player.player.transform.position.x - transform.position.x);
+		float diffY = Mathf.Abs (Player.player.transform.position.y - transform.position.y);
+		if (diffY < 1 && diffX < 1 && !(Player.player.possessing)) {
 			SendMessage("GetPossessed");
 			theGhost.possessing = true;
 		}
@@ -60,6 +62,10 @@ public class Combatant : MonoBehaviour {
 	void Update () {
 		deathAnim (!corpse);
 		if (health <= 0) {
+			if(!corpse) {
+				corpseCount++;
+				Debug.Log("Died: New corpse count is " + corpseCount);
+			}
 			corpse = true;
 			checkGhost();
 		}
@@ -73,6 +79,11 @@ public class Combatant : MonoBehaviour {
 				corpseTimer -= Time.deltaTime;
 			} else {
 				theGhost.kills += 1;
+				corpseCount--;
+				Debug.Log("Despawned: New corpse count is " + corpseCount);
+				if(corpseCount <= 0) {
+					Application.LoadLevel("gameOvel");
+				}
 				Destroy(gameObject);
 			}
 		}

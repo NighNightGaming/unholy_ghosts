@@ -70,14 +70,16 @@ public class EnemyMove : MonoBehaviour
 			gameObject.tag = "Player";
 			allEnemies.Remove(this);
 			if(Input.GetKey("left")) {
-				rigidbody2D.velocity = new Vector2(-2.5f, 0.0f);
+				rigidbody2D.AddForce(new Vector2(-25f, 0.0f));
+				//rigidbody2D.velocity = new Vector2(-2.5f, 0.0f);
 				if (facing != "left") {
 					transform.localScale = new Vector2(-8, 8);
 					facing = "left";
 				}
 			}
 			else if(Input.GetKey("right")) {
-				rigidbody2D.velocity = new Vector2(2.5f, 0.0f);
+				rigidbody2D.AddForce(new Vector2(25f, 0.0f));
+				//rigidbody2D.velocity = new Vector2(2.5f, 0.0f);
 				if (facing != "right") {
 					transform.localScale = new Vector2(8,8);
 					facing = "right";
@@ -87,7 +89,8 @@ public class EnemyMove : MonoBehaviour
 				jumpTimer -= Time.deltaTime;
 			} else {
 				if(Input.GetKey("up")){
-					rigidbody2D.velocity = (new Vector2(0.0f,5.0f));
+					rigidbody2D.velocity += new Vector2(0.0f,5.0f);
+					//rigidbody2D.velocity = (new Vector2(0.0f,5.0f));
 					jumpTimer = 1.0f;
 				}
 			}	
