@@ -27,9 +27,9 @@ public class Attacking : MonoBehaviour
 			attackTimer -= Time.deltaTime;
 		
 
-		if (rigidbody2D.velocity.x < 0)
+		if (rigidbody2D.velocity.x < -1)
 			dir = Vector2.right * -1;
-		else
+		else if (rigidbody2D.velocity.x > 1)
 			dir = Vector2.right;
 		
 		if (possesed) {
