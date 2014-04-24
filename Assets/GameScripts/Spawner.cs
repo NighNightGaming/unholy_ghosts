@@ -19,7 +19,6 @@ public class Spawner : MonoBehaviour {
 	public SpawnSetting[] mournerRates;
 	public SpawnSetting[] copRates;
 
-	private bool copOn = false;
 	public static float mournerRate = 15.0f;
 	private float mournerTimer = mournerRate;
 	public static float copRate = 15.0f;

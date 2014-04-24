@@ -4,7 +4,6 @@ using System.Collections;
 public class Hand : MonoBehaviour {
 	public float range = 100f;
 	private float diffX;
-	private LayerMask targetLayers;
 
 	public Rect grabBounds;
 
@@ -17,7 +16,6 @@ public class Hand : MonoBehaviour {
 	}
 
 	void Start () {
-				targetLayers = 1 << LayerMask.NameToLayer ("Player");
 		}
 	// Update is called once per frame
 	void FixedUpdate () {

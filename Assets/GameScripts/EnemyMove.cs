@@ -33,7 +33,6 @@ public class EnemyMove : MonoBehaviour
 			allEnemies = new System.Collections.Generic.HashSet<EnemyMove> ();
 		allEnemies.Add (this);
 		combatant = GetComponent<Combatant> ();
-		mobTarget = GameObject.FindGameObjectWithTag ("Player").transform;
 	}
 
 	/// <summary>
