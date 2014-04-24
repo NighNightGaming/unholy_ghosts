@@ -11,7 +11,7 @@ public class Attacking : MonoBehaviour
 	public float attackDmg = 20;
 	private float attackTimer = 0;
 	public float attackFreq = 0.5f;
-	
+	public bool hasGun = false;
 	Vector2 dir;
 	
 	// Use this for initialization
@@ -37,7 +37,7 @@ public class Attacking : MonoBehaviour
 				print("Player attacking");
 				Attack();
 			}
-		} else {
+		} else if (GetComponent<Combatant>().corpse == false) {
 			EnemyMove em = GetComponent<EnemyMove>();
 			if (em.mobTarget != null && this != null) {
 				if(Mathf.Abs(em.mobTarget.transform.position.x - transform.position.x) <= attackRange) Attack();
@@ -56,9 +56,9 @@ public class Attacking : MonoBehaviour
 	{
 		if (attackTimer > 0)
 			return;
-		
 		attackTimer = attackFreq;	
 		RaycastHit2D hit = Physics2D.Raycast (transform.position, dir, attackRange, targetLayers);
+		audio.Play ();
 		if (hit.rigidbody != null) {
 			hit.rigidbody.velocity += dir * attackStr;
 			Combatant comb = hit.collider.GetComponent<Combatant>();

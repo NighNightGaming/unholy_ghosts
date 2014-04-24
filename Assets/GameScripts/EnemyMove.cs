@@ -69,11 +69,13 @@ public class EnemyMove : MonoBehaviour
 			if (Mathf.Abs (xDiff) > closeToDist) {
 				rigidbody2D.AddForce (new Vector2 (Mathf.Sign (xDiff) * moveForce, 0));
 			}
+			/*
 			foreach (EnemyMove other in allEnemies) {
-				if (other != this && other.avoidanceClass == avoidanceClass && other.combatant.corpse == false) {
+				if (other != null && other != this && other.avoidanceClass == avoidanceClass && other.combatant.corpse == false) {
 					rigidbody2D.AddForce ((other.transform.position - transform.position).normalized * -1 * repulsionForce / (other.transform.position - transform.position).sqrMagnitude);
 				}
 			}
+			*/
 		}
 	 else if (!combatant.corpse && possessed) {
 			gameObject.tag = "Player";
