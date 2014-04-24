@@ -17,6 +17,8 @@ public class Combatant : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		theGhost = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+		if (corpse)
+						corpseCount++;
 	}
 	/// <summary>
 	/// Gets the possessed.
@@ -91,7 +93,7 @@ public class Combatant : MonoBehaviour {
 			if (removeTimer > 0) {
 				removeTimer -= Time.deltaTime;
 			} else {
-				theGhost.kills += 1;
+				Player.player.kills += 1;
 				corpseCount--;
 				Debug.Log("Despawned: New corpse count is " + corpseCount);
 				if(corpseCount <= 0) {

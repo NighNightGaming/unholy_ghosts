@@ -21,18 +21,16 @@ public class Hand : MonoBehaviour {
 		}
 	// Update is called once per frame
 	void FixedUpdate () {
-		RaycastHit2D reach = Physics2D.Raycast (transform.position, Vector2.up, range, targetLayers);
 		diffX = Mathf.Abs(Player.player.transform.position.x - gameObject.transform.position.x);
 		if (diffX < 1 && gameObject.transform.position.y < -3.5) {
-
-
-						rigidbody2D.velocity = (new Vector2 (0.0f, 8f));
-				}
+			rigidbody2D.velocity = (new Vector2 (0.0f, 8f));
+		}
 
 		if (transformedGrabBounds().Overlaps(Player.player.transformedGrabBounds())) {
 				print("You touched");
 				Application.LoadLevel("gameOvel");
-			}
+
+		}
 
 
 	}

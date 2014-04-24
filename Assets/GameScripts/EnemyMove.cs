@@ -48,7 +48,7 @@ public class EnemyMove : MonoBehaviour
 	void FixedUpdate ()
 	{
 		if (!possessed && !combatant.corpse) {
-			mobTarget = GameObject.FindGameObjectWithTag("Player").transform;
+			mobTarget = Player.player.transform;
 			float xDiff = mobTarget.transform.position.x - transform.position.x;
 			if (Mathf.Sign (xDiff) ==  -1) {
 				transform.localScale = new Vector2(-8, 8);
