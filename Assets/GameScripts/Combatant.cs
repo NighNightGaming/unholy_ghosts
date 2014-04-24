@@ -45,7 +45,7 @@ public class Combatant : MonoBehaviour {
 
 	void startTimer (bool activated) {
 		if (activated) {
-			newTimer = (GameObject) Instantiate(Timer, new Vector3(transform.position.x,transform.position.y + 2f, 0), Quaternion.identity);
+			newTimer = (GameObject) Instantiate(Timer, new Vector3(transform.position.x,transform.position.y + 0.5f, 0), Quaternion.identity);
 			newTimer.GetComponent<corpseTimer>().corpse = this;
 		}
 	}
