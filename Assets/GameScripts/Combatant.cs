@@ -72,6 +72,9 @@ public class Combatant : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {
+		if (possesed)
+						Player.possessedEnemy = gameObject;
+
 		deathAnim (!corpse);
 		if (health <= 0) {
 			if(!corpse) {
@@ -87,6 +90,7 @@ public class Combatant : MonoBehaviour {
 		if (corpse) {
 			if (possesed) {
 				possesed = false;
+				if(Player.possessedEnemy == gameObject) Player.possessedEnemy = null;
 				theGhost.possessing = false;
 				theGhost.toggleStatus();
 			}

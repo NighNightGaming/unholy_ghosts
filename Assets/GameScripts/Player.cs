@@ -10,6 +10,7 @@ public class Player : MonoBehaviour {
 	public static float possessBuffer = 5.0f;
 	public float possessTimer = possessBuffer;
 	public static Player player;
+	public static GameObject possessedEnemy;
 
 	public Rect grabBounds;
 	

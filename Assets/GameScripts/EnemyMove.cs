@@ -43,12 +43,21 @@ public class EnemyMove : MonoBehaviour
 	{
 		possessed = true;
 	}
-	
+
+	public Transform getTargetOfAggression()
+	{
+		if (Player.possessedEnemy != null)
+						return Player.possessedEnemy.transform;
+				else
+						return Player.player.transform;
+	}
+
+
 	// Update is called once per frame
 	void FixedUpdate ()
 	{
 		if (!possessed && !combatant.corpse) {
-			mobTarget = Player.player.transform;
+			mobTarget = getTargetOfAggression();
 			float xDiff = mobTarget.transform.position.x - transform.position.x;
 			if (Mathf.Sign (xDiff) ==  -1) {
 				transform.localScale = new Vector2(-8, 8);
@@ -70,7 +79,7 @@ public class EnemyMove : MonoBehaviour
 			gameObject.tag = "Player";
 			allEnemies.Remove(this);
 			if(Input.GetKey("left")) {
-				rigidbody2D.AddForce(new Vector2(-25f, 0.0f));
+				rigidbody2D.AddForce(new Vector2(-20f - 5 * Mathf.Sin(Time.time * 6), 0.0f));
 				//rigidbody2D.velocity = new Vector2(-2.5f, 0.0f);
 				if (facing != "left") {
 					transform.localScale = new Vector2(-8, 8);
@@ -78,7 +87,7 @@ public class EnemyMove : MonoBehaviour
 				}
 			}
 			else if(Input.GetKey("right")) {
-				rigidbody2D.AddForce(new Vector2(25f, 0.0f));
+				rigidbody2D.AddForce(new Vector2(20f + 5 * Mathf.Sin(Time.time * 6), 0.0f));
 				//rigidbody2D.velocity = new Vector2(2.5f, 0.0f);
 				if (facing != "right") {
 					transform.localScale = new Vector2(8,8);
