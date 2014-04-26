@@ -92,10 +92,10 @@ public class Spawner : MonoBehaviour {
 			offset = Random.Range(1f, 2.5f);
 			for (int x = 0; x < playerDeaths; x+= 1) {
 				if (x % 2 == 0) {
-					Instantiate(mound, new Vector3(playerX + offset, -2.983414f, 0), Quaternion.identity);
+					Instantiate(mound, new Vector3(playerX + offset, -3.140015f, 0), Quaternion.identity);
 					Instantiate(demon, new Vector3(playerX + offset, -3.121371f, 0), Quaternion.identity);
 				} else {
-					Instantiate(mound, new Vector3(playerX - offset, -2.983414f, 0), Quaternion.identity);
+					Instantiate(mound, new Vector3(playerX - offset, -3.140015f, 0), Quaternion.identity);
 					Instantiate(demon, new Vector3(playerX - offset, -3.121371f, 0), Quaternion.identity);
 				}
 			}

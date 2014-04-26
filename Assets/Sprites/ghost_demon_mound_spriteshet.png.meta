@@ -1,0 +1,103 @@
+fileFormatVersion: 2
+guid: e29ee9594ecb944e78f9aa4cfcd46516
+TextureImporter:
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings:
+  - buildTarget: iPhone
+    maxTextureSize: 1024
+    textureFormat: -2
+    compressionQuality: 50
+  spriteSheet:
+    sprites:
+    - name: ecto
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 773
+        width: 89
+        height: 89
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: ghost_demon_mound_spriteshet_1
+      rect:
+        serializedVersion: 2
+        x: 1071
+        y: 408
+        width: 1522
+        height: 368
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: ecto
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 662
+        width: 88
+        height: 89
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: ecto
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 445
+        width: 88
+        height: 89
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: mound
+      rect:
+        serializedVersion: 2
+        x: 1122
+        y: 11
+        width: 511
+        height: 158
+      alignment: 0
+      pivot: {x: .5, y: .5}
+    - name: ghost
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 137
+        width: 615
+        height: 760
+      alignment: 0
+      pivot: {x: .5, y: .5}
+  spritePackingTag: 
+  userData: 

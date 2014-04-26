@@ -30,7 +30,9 @@ public class Combatant : MonoBehaviour {
 		GetComponent<SpriteRenderer> ().color = zombieColor;
 		health = maxHealth;
 		GetComponent<SpriteRenderer> ().sortingOrder = 2;	
+		removeTimer = 5.0f;
 		Destroy (newTimer);
+
 
 	}
 	/// <summary>
