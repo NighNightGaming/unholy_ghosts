@@ -4,7 +4,7 @@ using System.Collections;
 public class Attacking : MonoBehaviour
 {
 	
-	public bool possesed = false;
+	public bool possessed = false;
 	private LayerMask targetLayers;
 	public float attackRange = 0.2f;
 	public float attackStr = 0.5f;
@@ -15,24 +15,25 @@ public class Attacking : MonoBehaviour
 	Vector2 dir;
 	
 	// Use this for initialization
-	void Start ()
-	{
+	void Start () {
+		//setting the target Layer
 		targetLayers = 1 << LayerMask.NameToLayer ("Player");
 	}
 	
 	// Update is called once per frame
-	void Update ()
-	{
-		if (attackTimer > 0)
-			attackTimer -= Time.deltaTime;
-		
-
+	void Update () {
+		if (attackTimer > 0) {
+						attackTimer -= Time.deltaTime;
+		}
+		//this governs the ability for the attacks to go bidirectionally
 		if (rigidbody2D.velocity.x < -1)
+			//left
 			dir = Vector2.right * -1;
 		else if (rigidbody2D.velocity.x > 1)
+			//right
 			dir = Vector2.right;
 		
-		if (possesed) {
+		if (possessed) {
 			if(Input.GetButtonDown("Fire2") || Input.GetKey("space")) {
 				print("Player attacking");
 				Attack();
@@ -47,7 +48,7 @@ public class Attacking : MonoBehaviour
 	
 	void GetPossessed ()
 	{
-		possesed = true;
+		possessed = true;
 		targetLayers = 1 << LayerMask.NameToLayer ("Enemy");
 		gameObject.layer = LayerMask.NameToLayer ("Player");
 	}

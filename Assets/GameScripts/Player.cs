@@ -14,7 +14,7 @@ public class Player : MonoBehaviour {
 
 	public Rect grabBounds;
 	
-	
+	//allows for demon hand to grab.
 	public Rect transformedGrabBounds() {
 		Rect result = grabBounds;
 		result.center += (Vector2) transform.position;
@@ -29,7 +29,9 @@ public class Player : MonoBehaviour {
 		player = this;
 	}
 	/// <summary>
-	/// Toggles the status.
+	/// Toggles the active status of  the player,
+	/// upon decactivation the possess buffer gets reuped
+	/// upon deactivation the deaths ++
 	/// </summary>
 	public void toggleStatus() {
 		if (gameObject.activeSelf) {
@@ -37,12 +39,11 @@ public class Player : MonoBehaviour {
 			possessTimer = possessBuffer;
 		} else {
 			gameObject.SetActive(true);
-			gameObject.tag = "Player";
 			deaths += 1;
 		}
 	}
 
-	public 
+ 
 
 	// Update is called once per frame
 	void Update () {
@@ -56,7 +57,7 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	
+	//allows visualization of the bounds
 	void OnDrawGizmos() {
 		Gizmos.color = Color.red;
 		Gizmos.DrawWireCube(transformedGrabBounds().center, new Vector3(grabBounds.width, grabBounds.height, 0));

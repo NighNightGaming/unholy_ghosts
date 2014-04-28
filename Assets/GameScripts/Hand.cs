@@ -19,11 +19,13 @@ public class Hand : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void FixedUpdate () {
+
 		diffX = Mathf.Abs(Player.player.transform.position.x - gameObject.transform.position.x);
+		//if the play is close (ie difference between player.x and hand.x is less than threshold) jump!
 		if (diffX < 1 && gameObject.transform.position.y < -2.36) {
 			rigidbody2D.velocity = (new Vector2 (0.0f, 8f));
 		}
-
+		//if the bounds overlaps with the players bounds, GAMEOVER!
 		if (transformedGrabBounds().Overlaps(Player.player.transformedGrabBounds())) {
 				print("You touched");
 				Application.LoadLevel("gameOvel");
@@ -31,7 +33,7 @@ public class Hand : MonoBehaviour {
 		}
 	}
 
-
+	//allows for the visual representation of the grab box
 	void OnDrawGizmos() {
 		Gizmos.color = Color.red;
 		Gizmos.DrawWireCube(transformedGrabBounds().center, new Vector3(grabBounds.width, grabBounds.height, 0));
