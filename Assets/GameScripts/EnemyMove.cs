@@ -41,12 +41,15 @@ public class EnemyMove : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Gets the possessed.
+	/// sets the possessed flag
 	/// </summary>
 	void GetPossessed ()
 	{
 		possessed = true;
 	}
+	/// <summary>
+	/// Flip the sprite on the x, allowing for facing left/right.
+	/// </summary>
 	void flip() {
 		facingRight = !facingRight;
 		
@@ -55,16 +58,23 @@ public class EnemyMove : MonoBehaviour
 		transform.localScale = theScale;
 	}
 
+	/// <summary>
+	/// Gets the target of aggression.
+	/// </summary>
+	/// <returns>The target of aggression.</returns>
 	public Transform getTargetOfAggression()
 	{
+		//if the player is possessing, 
 		if (Player.possessedEnemy != null)
+			//target is what ever is being possessed
 			return Player.possessedEnemy.transform;
 		else
 			return Player.player.transform;
 	}
 
 	void Update () {
-		if (mournerCount < 0) {
+		//if there are no mourners on the field, set warning.
+		if (mournerCount <= 0) {
 			if (warning.activeSelf) {
 				warning.SetActive(false);
 			} else {
@@ -76,9 +86,11 @@ public class EnemyMove : MonoBehaviour
 	// Update is called once per frame
 	void FixedUpdate ()
 	{
-		if (combatant.removeTimer < 1) {
+		//if the destroyTimer is less than one, preemtively remove them off the count
+		if (combatant.destroyTimer < 1) {
 			mournerCount -= 1;
 		} else if (!possessed && !combatant.corpse) {
+			//if not possessed and not a corpse, move towards target
 				mobTarget = getTargetOfAggression ();
 				float xDiff = mobTarget.transform.position.x - transform.position.x;
 				if (Mathf.Sign (xDiff) > -1) {
@@ -98,18 +110,17 @@ public class EnemyMove : MonoBehaviour
 			}
 			*/
 		} else if (!combatant.corpse && possessed) {
+			//if not corpse, but possessed, give control to player.
 				float h = Input.GetAxis ("Horizontal");
 				gameObject.tag = "Player";
 				allEnemies.Remove (this);
 				if (h < 0) {
 						rigidbody2D.AddForce (new Vector2 (-20f - 5 * Mathf.Sin (Time.time * 6), 0.0f));
-						//rigidbody2D.velocity = new Vector2(-2.5f, 0.0f);
 						if (facingRight) {
 								flip ();
 						}
 				} else if (h > 0) {
 						rigidbody2D.AddForce (new Vector2 (20f + 5 * Mathf.Sin (Time.time * 6), 0.0f));
-						//rigidbody2D.velocity = new Vector2(2.5f, 0.0f);
 						if (!facingRight) {
 								flip ();
 						}

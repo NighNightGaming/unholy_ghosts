@@ -7,20 +7,20 @@ public class Hand : MonoBehaviour {
 
 	public Rect grabBounds;
 
-
+	/// <summary>
+	/// Estbalishes the grab bounds
+	/// </summary>
+	/// returns the reulint rect.
 	private Rect transformedGrabBounds() {
 		Rect result = grabBounds;
 		result.center += (Vector2) transform.position;
 		result.center -= new Vector2 (result.width / 2, result.height / 2);
 		return result;
 	}
-
-	void Start () {
-		}
 	// Update is called once per frame
 	void FixedUpdate () {
 		diffX = Mathf.Abs(Player.player.transform.position.x - gameObject.transform.position.x);
-		if (diffX < 1 && gameObject.transform.position.y < -3.5) {
+		if (diffX < 1 && gameObject.transform.position.y < -2.36) {
 			rigidbody2D.velocity = (new Vector2 (0.0f, 8f));
 		}
 
@@ -29,8 +29,6 @@ public class Hand : MonoBehaviour {
 				Application.LoadLevel("gameOvel");
 
 		}
-
-
 	}
 
 

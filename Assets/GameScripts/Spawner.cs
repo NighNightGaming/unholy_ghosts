@@ -89,14 +89,14 @@ public class Spawner : MonoBehaviour {
 		if (Player.player.GetComponent<Player> ().possessing == false && playerDeaths > 1 && spawn == false) {
 			float playerX = Player.player.GetComponent<Transform>().position.x;
 			spawn = true;
-			offset = Random.Range(1f, 2.5f);
+			offset = Random.Range(2.5f, 3.5f);
 			for (int x = 0; x < playerDeaths; x+= 1) {
 				if (x % 2 == 0) {
 					Instantiate(mound, new Vector3(playerX + offset, -3.140015f, 0), Quaternion.identity);
-					Instantiate(demon, new Vector3(playerX + offset, -3.121371f, 0), Quaternion.identity);
+					Instantiate(demon, new Vector3(playerX + offset, -4.505769f, 0), Quaternion.Euler(0,0,-90));
 				} else {
 					Instantiate(mound, new Vector3(playerX - offset, -3.140015f, 0), Quaternion.identity);
-					Instantiate(demon, new Vector3(playerX - offset, -3.121371f, 0), Quaternion.identity);
+					Instantiate(demon, new Vector3(playerX - offset, -4.505769f, 0), Quaternion.Euler(0,0,-90));
 				}
 			}
 		}
