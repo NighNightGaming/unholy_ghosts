@@ -24,7 +24,7 @@ public class corpseTimer : MonoBehaviour {
 		thisText.text = (Mathf.CeilToInt(timer)).ToString();
 		//animate this floaty
 		if (transform.position.y < corpse.GetComponent<Transform>().position.y + 1.5f && corpse != null) {
-			transform.Translate(Vector2.up * (Time.deltaTime / 1.5f));
+			transform.Translate(Vector2.up * (Time.deltaTime / 2f));
 		} else {
 			transform.position = initialPos;
 		}

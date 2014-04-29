@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Combatant : MonoBehaviour {
 
-	public static int corpseCount; //to keep track of the corpses in-game
-	public static int mournerCount; //to keep track of the mourners in-game
+	///to keep track of the corpses in-game
+	public static int corpseCount; 
 	public GameObject Timer;
 	public float maxHealth = 100;
 	public float health = 100;    
@@ -18,11 +18,7 @@ public class Combatant : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//this is included to take into consideration the start_mourner
-		if (corpse)
-						corpseCount += 1;
-				else
-						mournerCount += 1;
-		Debug.Log("Spawned: MournerCount is " + mournerCount);
+		if (corpse) corpseCount += 1;
 	}
 	/// <summary>
 	/// This function changes the necesary components to have a possesed enemy:
@@ -42,7 +38,7 @@ public class Combatant : MonoBehaviour {
 		GetComponent<SpriteRenderer> ().sortingOrder = 2;	
 		destroyTimeout = 5.0f;
 		Destroy (destroyTimer);
-		//makes em somewhat tougher
+		///makes em somewhat tougher
 		health = maxHealth + 50;
 	}
 	/// <summary>
@@ -126,10 +122,9 @@ public class Combatant : MonoBehaviour {
 			} else {
 				Player.player.kills += 1;
 				corpseCount -= 1;
-				mournerCount -= 1;
 				Debug.Log("Despawned: New corpse count is " + corpseCount);
 				//if there are no corpses on the screen, nothing can happen
-				if(corpseCount < 0) {
+				if(corpseCount <= 0 && Player.player.possessing == false) {
 					Application.LoadLevel("nocorpse");
 				}
 				Destroy (destroyTimer);
