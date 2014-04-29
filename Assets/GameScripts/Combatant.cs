@@ -3,21 +3,26 @@ using System.Collections;
 
 public class Combatant : MonoBehaviour {
 
-	public static int corpseCount = 0;
+	public static int corpseCount; //to keep track of the corpses in-game
+	public static int mournerCount; //to keep track of the mourners in-game
 	public GameObject Timer;
 	public float maxHealth = 100;
 	public float health = 100;    
 	public bool corpse = false;
 	public bool possesed = false;
 	public Color zombieColor = Color.green;
-	public float destroyTimer = 5.0f;
+	public float destroyTimeout = 5.0f;
 	private bool timerActivate;
-	private GameObject newTimer;
+	private GameObject destroyTimer; 
 
 	// Use this for initialization
 	void Start () {
 		//this is included to take into consideration the start_mourner
-		if (corpse) corpseCount++;
+		if (corpse)
+						corpseCount += 1;
+				else
+						mournerCount += 1;
+		Debug.Log("Spawned: MournerCount is " + mournerCount);
 	}
 	/// <summary>
 	/// This function changes the necesary components to have a possesed enemy:
@@ -26,19 +31,19 @@ public class Combatant : MonoBehaviour {
 	/// Zombies are a certain color
 	/// health should be back up as they are sort of revived, right?
 	/// the timer is reset.
-	/// Destroy the old timer.
+	/// Destroy the  destroyTimer.
 	/// </summary>
 	void GetPossessed()
 	{	
+		corpseCount -= 1;
 		corpse = false;
 		possesed = true;
 		GetComponent<SpriteRenderer> ().color = zombieColor;
-		health = maxHealth;
 		GetComponent<SpriteRenderer> ().sortingOrder = 2;	
-		destroyTimer = 5.0f;
-		Destroy (newTimer);
-
-
+		destroyTimeout = 5.0f;
+		Destroy (destroyTimer);
+		//makes em somewhat tougher
+		health = maxHealth + 50;
 	}
 	/// <summary>
 	/// This function aquires the difference between the enemy's position and the players
@@ -49,7 +54,8 @@ public class Combatant : MonoBehaviour {
 	void checkGhost() {
 		float diffX = Mathf.Abs(Player.player.transform.position.x - transform.position.x);
 		float diffY = Mathf.Abs (Player.player.transform.position.y - transform.position.y);
-		if (diffY < 1 && diffX < 1 && !(Player.player.possessing)) {
+		//commentout the final condition to remove possessbuffer
+		if (diffY < 1 && diffX < 1 && !(Player.player.possessing) && Player.player.possessTimer <= 0f) {
 			SendMessage("GetPossessed");
 			Player.player.possessing = true;
 		}
@@ -61,8 +67,8 @@ public class Combatant : MonoBehaviour {
 	/// <param name="timerActivate">If set to <c>true</c> then function instantiates a timer above the corpse.</param>
 	void startTimer (bool timerActivate) {
 		if (timerActivate) {
-			newTimer = (GameObject) Instantiate(Timer, new Vector3(transform.position.x,transform.position.y + 0.5f, 0), Quaternion.identity);
-			newTimer.GetComponent<corpseTimer>().corpse = this;
+			destroyTimer = (GameObject) Instantiate(Timer, new Vector3(transform.position.x,transform.position.y + 0.5f, 0), Quaternion.identity);
+			destroyTimer.GetComponent<corpseTimer>().corpse = this;
 		}
 	}
 	/// <summary>
@@ -115,17 +121,18 @@ public class Combatant : MonoBehaviour {
 				Player.player.possessing = false;
 				Player.player.toggleStatus();
 			}
-			if (destroyTimer > 0) {
-				destroyTimer -= Time.deltaTime;
+			if (destroyTimeout > 0) {
+				destroyTimeout -= Time.deltaTime;
 			} else {
 				Player.player.kills += 1;
-				corpseCount--;
+				corpseCount -= 1;
+				mournerCount -= 1;
 				Debug.Log("Despawned: New corpse count is " + corpseCount);
 				//if there are no corpses on the screen, nothing can happen
-				if(corpseCount <= 0) {
+				if(corpseCount < 0) {
 					Application.LoadLevel("nocorpse");
 				}
-				Destroy (newTimer);
+				Destroy (destroyTimer);
 				Destroy(gameObject);
 			}
 		}

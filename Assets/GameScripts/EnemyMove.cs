@@ -16,7 +16,6 @@ public class EnemyMove : MonoBehaviour
 	private Combatant combatant;
 	public float jumpTimer = 1.0f;
 	private Vector3 initFace;
-	private int mournerCount = 0;
 	private GameObject warning;
 	/// <summary>
 	/// Raises the level was loaded event.
@@ -34,7 +33,6 @@ public class EnemyMove : MonoBehaviour
 		if (allEnemies == null)
 			allEnemies = new System.Collections.Generic.HashSet<EnemyMove> ();
 		allEnemies.Add (this);
-		mournerCount+=1;
 		combatant = GetComponent<Combatant> ();
 		initFace = new Vector2 (transform.localScale.x * -1, transform.localScale.y);
 		warning = GameObject.FindGameObjectWithTag("CorpseWarning");	
@@ -71,25 +69,12 @@ public class EnemyMove : MonoBehaviour
 		else
 			return Player.player.transform;
 	}
-
-	void Update () {
-		//if there are no mourners on the field, set warning.
-		if (mournerCount <= 0) {
-			if (warning.activeSelf) {
-				warning.SetActive(false);
-			} else {
-				warning.SetActive(true);
-			}
-		}
-	}
 	 
 	// Update is called once per frame
 	void FixedUpdate ()
 	{
-		//if the destroyTimer is less than one, preemtively remove them off the count
-		if (combatant.destroyTimer < 1) {
-			mournerCount -= 1;
-		} else if (!possessed && !combatant.corpse) {
+
+		if (!possessed && !combatant.corpse) {
 			//if not possessed and not a corpse, move towards target
 				mobTarget = getTargetOfAggression ();
 				float xDiff = mobTarget.transform.position.x - transform.position.x;
@@ -102,13 +87,13 @@ public class EnemyMove : MonoBehaviour
 				if (Mathf.Abs (xDiff) > closeToDist) {
 						rigidbody2D.AddForce (new Vector2 (Mathf.Sign (xDiff) * moveForce, 0));
 				}
-				/* Causin' problems
+				// Causin' problems
 		foreach (EnemyMove other in allEnemies) {
 			if (other != null && other != this && other.avoidanceClass == avoidanceClass && other.combatant.corpse == false) {
 				rigidbody2D.AddForce ((other.transform.position - transform.position).normalized * -1 * repulsionForce / (other.transform.position - transform.position).sqrMagnitude);
 			}
 			}
-			*/
+
 		} else if (!combatant.corpse && possessed) {
 			//if not corpse, but possessed, give control to player.
 				float h = Input.GetAxis ("Horizontal");
@@ -129,8 +114,8 @@ public class EnemyMove : MonoBehaviour
 						jumpTimer -= Time.deltaTime;
 				} else {
 						if (Input.GetKey ("up")) {
+								//+= allows for momentum
 								rigidbody2D.velocity += new Vector2 (0.0f, 5.0f);
-								//rigidbody2D.velocity = (new Vector2(0.0f,5.0f));
 								jumpTimer = 1.0f;
 						}
 				}

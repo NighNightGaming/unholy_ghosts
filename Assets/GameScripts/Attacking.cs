@@ -41,7 +41,8 @@ public class Attacking : MonoBehaviour
 		} else if (GetComponent<Combatant>().corpse == false) {
 			EnemyMove em = GetComponent<EnemyMove>();
 			if (em.mobTarget != null && this != null) {
-				if(Mathf.Abs(em.mobTarget.transform.position.x - transform.position.x) <= attackRange) Attack();
+				if(Mathf.Abs(em.mobTarget.transform.position.x - transform.position.x) 
+				   <= attackRange && em.mobTarget != Player.player.GetComponent<Transform>()) Attack();
 			}
 		}
 	}

@@ -7,10 +7,12 @@ public class Player : MonoBehaviour {
 	public int kills = 0;
 	public bool gameOvel;
 	public string key = "ghost_sprite";
-	public static float possessBuffer = 5.0f;
-	public float possessTimer = possessBuffer;
 	public static Player player;
 	public static GameObject possessedEnemy;
+	///The below variables bar the user from repossessing immediately after being ejected
+	//keep below corpseTimer (5.0f)
+	public static float possessBuffer = 2.0f;
+	public float possessTimer;
 
 	public Rect grabBounds;
 	
@@ -27,6 +29,8 @@ public class Player : MonoBehaviour {
 	void Start () {
 		possessing = false;
 		player = this;
+		//initialize at 0 so that the initial corpse can be acquired
+		possessTimer = 0f;
 	}
 	/// <summary>
 	/// Toggles the active status of  the player,

@@ -15,12 +15,13 @@ public class Spawner : MonoBehaviour {
 	public Transform femaleMourner;
 	public Transform maleMourner;
 	public Transform cop;
-	public Transform mound;
-	public Transform demon;
-	
+
+	//declared as gameobjects because they will be destroyed in this script aswell
+	public GameObject mound;
+	public GameObject demon;
+
 	public SpawnSetting[] mournerRates;
 	public SpawnSetting[] copRates;
-
 	public static float mournerRate = 15.0f;
 	private float mournerTimer = mournerRate;
 	public static float copRate = 15.0f;
@@ -52,66 +53,70 @@ public class Spawner : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		now = Time.deltaTime;
-		playerDeaths = Player.player.GetComponent<Player> ().deaths;
+		playerDeaths = Player.player.deaths;
 
 		if (mournerTimer > 0) {
-			mournerTimer -= now;
+				mournerTimer -= now;
 		} else {
-			mournerTimer = mournerRate;
-			gender = Random.Range(1,10);
-			if (gender % 2 == 0) {
-				Instantiate (femaleMourner, getNewEnemySpawnPosition(), Quaternion.identity);
-			} else {
-				Instantiate( maleMourner, getNewEnemySpawnPosition(), Quaternion.identity);
-			}
+				mournerTimer = mournerRate;
+				gender = Random.Range (1, 10);
+				if (gender % 2 == 0) {
+						Instantiate (femaleMourner, getNewEnemySpawnPosition (), Quaternion.identity);
+				} else {
+						Instantiate (maleMourner, getNewEnemySpawnPosition (), Quaternion.identity);
+				}
 		}
 
 		//for each spawnRate,
 		foreach (SpawnSetting ss in mournerRates) {
-			//if player kills equals the killCount treshhold 
-			if (Player.player.GetComponent<Player> ().kills == ss.killCount) {
-				//assign the rate the according spawnRate for the kllcount
-				mournerRate = ss.spawnRate;
-				///this line clips the mournerTimer down to at most the new mournerRate.
-				/// This makes the new mournerRate take effect immediately, 
-				/// so that if the timer was previously higher it now reflects the new value.
-				mournerTimer = Mathf.Min(mournerTimer, mournerRate);
-			}
+				//if player kills equals the killCount treshhold 
+				if (Player.player.kills == ss.killCount) {
+						//assign the rate the according spawnRate for the kllcount
+						mournerRate = ss.spawnRate;
+						///this line clips the mournerTimer down to at most the new mournerRate.
+						/// This makes the new mournerRate take effect immediately, 
+						/// so that if the timer was previously higher it now reflects the new value.
+						mournerTimer = Mathf.Min (mournerTimer, mournerRate);
+				}
 		}
 
 		foreach (SpawnSetting ss in copRates) {
-			if (Player.player.GetComponent<Player> ().kills == ss.killCount) {
-				copRate = ss.spawnRate;
-				//here it effectively disables spawning until killCount is reached 
-				copTimer = Mathf.Min(copTimer, copRate);
-			}
+				if (Player.player.kills == ss.killCount) {
+						copRate = ss.spawnRate;
+						//here it effectively disables spawning until killCount is reached 
+						copTimer = Mathf.Min (copTimer, copRate);
+				}
 		}
 
 
-			if (copTimer > 0) {
+		if (copTimer > 0) {
 				copTimer -= now;
-			} else {
+		} else {
 				copTimer = copRate;
-				Instantiate( cop, getNewEnemySpawnPosition(), Quaternion.identity);
-			}
+				Instantiate (cop, getNewEnemySpawnPosition (), Quaternion.identity);
+		}
 
 		//the player is a ghost again, ie not possessing, having died (as to avoid spawning upon load)
 		//and spawn is false to prevent too many of these spawning
 		//think of way of progressive difficulty.
-		if (Player.player.GetComponent<Player> ().possessing == false && playerDeaths > 1 && spawn == false) {
-			float playerX = Player.player.GetComponent<Transform>().position.x;
-			spawn = true;
-			//offsets the spawn of the demon hands/mounds
-			offset = Random.Range(2.5f, 3.5f);
-			for (int x = 0; x < playerDeaths; x+= 1) {
-				if (x % 2 == 0) {
-					Instantiate(mound, new Vector3(playerX + offset, -3.140015f, 0), Quaternion.identity);
-					Instantiate(demon, new Vector3(playerX + offset, -4.505769f, 0), Quaternion.Euler(0,0,-90));
-				} else {
-					Instantiate(mound, new Vector3(playerX - offset, -3.140015f, 0), Quaternion.identity);
-					Instantiate(demon, new Vector3(playerX - offset, -4.505769f, 0), Quaternion.Euler(0,0,-90));
+		if (Player.player.possessing == false && playerDeaths > 1 && spawn == false) {
+				float playerX = Player.player.transform.position.x;
+				spawn = true;
+				//offsets the spawn of the demon hands/mounds
+				offset = Random.Range (2.5f, 6.5f);
+				for (int x = 0; x < playerDeaths; x+= 1) {
+					if (x % 2 == 0) {
+							Instantiate (mound, new Vector3 (playerX + offset, -3.140015f, 0), Quaternion.identity);
+							Instantiate (demon, new Vector3 (playerX + offset, -4.505769f, 0), Quaternion.Euler (0, 0, -90));
+					} else {
+							Instantiate (mound, new Vector3 (playerX - offset, -3.140015f, 0), Quaternion.identity);
+							Instantiate (demon, new Vector3 (playerX - offset, -4.505769f, 0), Quaternion.Euler (0, 0, -90));
+					}
 				}
 			}
+		//the relational operator effectively clips the amount of demon spawn to 5
+		else if (Player.player.possessing && spawn == true && playerDeaths < 3) {
+							spawn = false;
 		}
 	}
 }
