@@ -28,6 +28,7 @@ public class Hand : MonoBehaviour {
 		//if the bounds overlaps with the players bounds, GAMEOVER!
 		if (transformedGrabBounds().Overlaps(Player.player.transformedGrabBounds())) {
 				print("You touched");
+				Player.handGrab = true;
 				Application.LoadLevel("gameOvel");
 
 		}

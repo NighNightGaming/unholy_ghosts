@@ -16,7 +16,6 @@ public class EnemyMove : MonoBehaviour
 	private Combatant combatant;
 	public float jumpTimer = 1.0f;
 	private Vector3 initFace;
-	private GameObject warning;
 	/// <summary>
 	/// Raises the level was loaded event.
 	/// </summary>
@@ -35,7 +34,6 @@ public class EnemyMove : MonoBehaviour
 		allEnemies.Add (this);
 		combatant = GetComponent<Combatant> ();
 		initFace = new Vector2 (transform.localScale.x * -1, transform.localScale.y);
-		warning = GameObject.FindGameObjectWithTag("CorpseWarning");	
 	}
 
 	/// <summary>

@@ -125,6 +125,7 @@ public class Combatant : MonoBehaviour {
 				Debug.Log("Despawned: New corpse count is " + corpseCount);
 				//if there are no corpses on the screen, nothing can happen
 				if(corpseCount <= 0 && Player.player.possessing == false) {
+					Player.handGrab = false;
 					Application.LoadLevel("gameOvel");
 				}
 				Destroy (destroyTimer);

@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
 	public string key = "ghost_sprite";
 	public static Player player;
 	public static GameObject possessedEnemy;
+	public static bool handGrab;
 	///The below variables bar the user from repossessing immediately after being ejected
 	//keep below corpseTimer (5.0f)
 	public static float possessBuffer = 2.0f;
