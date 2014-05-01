@@ -15,7 +15,6 @@ public class EnemyMove : MonoBehaviour
 	public bool facingRight = true;
 	private Combatant combatant;
 	public float jumpTimer = 1.0f;
-	private Vector3 initFace;
 	private Animator anim;	
 	/// <summary>
 	/// Raises the level was loaded event.
@@ -34,7 +33,6 @@ public class EnemyMove : MonoBehaviour
 			allEnemies = new System.Collections.Generic.HashSet<EnemyMove> ();
 		allEnemies.Add (this);
 		combatant = GetComponent<Combatant> ();
-		initFace = new Vector2 (transform.localScale.x * -1, transform.localScale.y);
 		anim = GetComponent<Animator> ();
 
 	}
@@ -79,11 +77,15 @@ public class EnemyMove : MonoBehaviour
 			//if not possessed and not a corpse, move towards target
 				mobTarget = getTargetOfAggression ();
 				float xDiff = mobTarget.transform.position.x - transform.position.x;
+				//using flip() causes tweaker jitters
+				//must set facing or direction when possessing is wierd, sometimes.
 				if (Mathf.Sign (xDiff) > -1) {
 						transform.localScale = new Vector2 (0.2f, 0.2f);
+						facingRight = true;
 
 				} else {
 						transform.localScale = new Vector2 (-0.2f, 0.2f);
+						facingRight = false;
 				}
 				if (Mathf.Abs (xDiff) > closeToDist) {
 				rigidbody2D.AddForce (new Vector2 (Mathf.Sign (xDiff) * moveForce, 0));

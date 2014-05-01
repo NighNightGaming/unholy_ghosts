@@ -9,6 +9,8 @@ public class Attacking : MonoBehaviour
 	public float attackRange = 0.2f;
 	public float attackStr = 0.5f;
 	public float attackDmg = 20;
+	public float zombieDmgBoost = 1.5f;
+	public float zombieStrBoost = 2f;
 	private float attackTimer = 0;
 	public float attackFreq = 0.5f;
 	public bool hasGun = false;
@@ -56,6 +58,14 @@ public class Attacking : MonoBehaviour
 		possessed = possession;
 		targetLayers = 1 << LayerMask.NameToLayer ("Enemy");
 		gameObject.layer = LayerMask.NameToLayer ("Player");
+		//adding zombie bonus
+		if (possession) {
+			attackDmg *= zombieDmgBoost;
+			attackStr *= zombieStrBoost;
+		} else { //taking away zombie bonus
+			attackDmg /= zombieDmgBoost;
+			attackStr /= zombieStrBoost;
+		}
 	}
 	
 	void Attack ()

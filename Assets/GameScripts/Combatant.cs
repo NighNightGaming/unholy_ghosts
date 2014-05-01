@@ -52,7 +52,11 @@ public class Combatant : MonoBehaviour {
 		float diffX = Mathf.Abs(Player.player.transform.position.x - transform.position.x);
 		float diffY = Mathf.Abs (Player.player.transform.position.y - transform.position.y);
 		//commentout the final condition to remove possessbuffer
-		if (diffY < 1 && diffX < 1 && !(Player.player.possessing) && Player.player.possessTimer <= 0f) {
+		//remove second comment to not allow multiple possessions
+		if (diffY < 1 && diffX < 1 /*&& !(Player.player.possessing) */&& Player.player.possessTimer <= 0f) {
+#if UNITY_EDITOR
+			Debug.Log("possession time!");
+#endif
 			SendMessage("GetPossessed", true);
 			Player.player.possessing = true;
 		}
@@ -109,6 +113,7 @@ public class Combatant : MonoBehaviour {
 			}
 			//if possessed then corpse, remove possession and related flags
 			if (possessed) {
+				corpseCount+=1;
 				SendMessage("GetPossessed", false);
 				if(Player.possessedEnemy == gameObject) Player.possessedEnemy = null;
 				Player.player.possessing = false;
@@ -122,6 +127,7 @@ public class Combatant : MonoBehaviour {
 		}
 
 		if (corpse) {
+			health = 0;
 			if (destroyTimeout > 0) {
 				destroyTimeout -= Time.deltaTime;
 			} else {
@@ -132,7 +138,7 @@ public class Combatant : MonoBehaviour {
 				#endif
 
 				//if there are no corpses on the screen, nothing can happen
-				if(corpseCount < 0 && Player.player.possessing == false) {
+				if(corpseCount <= 0 && Player.player.possessing == false) {
 					Player.handGrab = false;
 					Application.LoadLevel("gameOvel");
 				}
