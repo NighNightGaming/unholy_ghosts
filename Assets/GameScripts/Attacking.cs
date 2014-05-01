@@ -35,7 +35,9 @@ public class Attacking : MonoBehaviour
 		
 		if (possessed) {
 			if(Input.GetButtonDown("Fire2") || Input.GetKey("space")) {
-				print("Player attacking");
+				#if UNITY_EDITOR
+				Debug.Log("Player attacking");
+				#endif
 				Attack();
 			}
 		} else if (GetComponent<Combatant>().corpse == false) {

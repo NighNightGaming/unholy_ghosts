@@ -102,7 +102,10 @@ public class Combatant : MonoBehaviour {
 			//before corpse, raise the corpse count, else it gets mixed up with the start_mourner
 			if(!corpse) {
 				corpseCount++;
-				Debug.Log("Died: New corpse count is " + corpseCount);
+				#if UNITY_EDITOR
+				Debug.Log("Despawned: New corpse count is " + corpseCount);
+				#endif
+
 				timerActivate = true;
 			}
 			corpse = true;
@@ -124,7 +127,10 @@ public class Combatant : MonoBehaviour {
 			} else {
 				Player.player.kills += 1;
 				corpseCount -= 1;
-				Debug.Log("Despawned: New corpse count is " + corpseCount);
+				#if UNITY_EDITOR
+					Debug.Log("Despawned: New corpse count is " + corpseCount);
+				#endif
+
 				//if there are no corpses on the screen, nothing can happen
 				if(corpseCount <= 0 && Player.player.possessing == false) {
 					Player.handGrab = false;
