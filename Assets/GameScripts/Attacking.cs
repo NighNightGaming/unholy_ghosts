@@ -51,9 +51,9 @@ public class Attacking : MonoBehaviour
 		}
 	}
 	
-	void GetPossessed ()
+	void GetPossessed (bool possession)
 	{
-		possessed = true;
+		possessed = possession;
 		targetLayers = 1 << LayerMask.NameToLayer ("Enemy");
 		gameObject.layer = LayerMask.NameToLayer ("Player");
 	}

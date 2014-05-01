@@ -54,7 +54,7 @@ public class Player : MonoBehaviour {
 	void Update () {
 		if (possessing) {
 			toggleStatus();
-		} else {
+		} else if (possessTimer > -1){
 			possessTimer -= Time.deltaTime;
 		}
 		if (gameOvel) {

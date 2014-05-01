@@ -9,8 +9,9 @@ public class Combatant : MonoBehaviour {
 	public float maxHealth = 100;
 	public float health = 100;    
 	public bool corpse = false;
-	public bool possesed = false;
-	public Color zombieColor = Color.green;
+	public bool possessed = false;
+	public Color zombieColor = Color.cyan;
+	public Color deathColor = Color.green;
 	public float destroyTimeout = 5.0f;
 	private bool timerActivate;
 	private GameObject destroyTimer; 
@@ -21,7 +22,7 @@ public class Combatant : MonoBehaviour {
 		if (corpse) corpseCount += 1;
 	}
 	/// <summary>
-	/// This function changes the necesary components to have a possesed enemy:
+	/// This function changes the necesary components to have a possessed enemy:
 	/// Enemy is no longer a corpse, but a zombie
 	/// It is now a zombie, thus it is possessed.
 	/// Zombies are a certain color
@@ -33,7 +34,7 @@ public class Combatant : MonoBehaviour {
 	{	
 		corpseCount -= 1;
 		corpse = false;
-		possesed = true;
+		possessed = true;
 		GetComponent<SpriteRenderer> ().color = zombieColor;
 		GetComponent<SpriteRenderer> ().sortingOrder = 2;	
 		destroyTimeout = 5.0f;
@@ -52,7 +53,7 @@ public class Combatant : MonoBehaviour {
 		float diffY = Mathf.Abs (Player.player.transform.position.y - transform.position.y);
 		//commentout the final condition to remove possessbuffer
 		if (diffY < 1 && diffX < 1 && !(Player.player.possessing) && Player.player.possessTimer <= 0f) {
-			SendMessage("GetPossessed");
+			SendMessage("GetPossessed", true);
 			Player.player.possessing = true;
 		}
 	}
@@ -79,11 +80,10 @@ public class Combatant : MonoBehaviour {
 
 		if (revive) {
 			target = Quaternion.Euler(0,0,0);
-			GetComponent<Animator> ().SetBool ("die", false);
 		} 
 		//tween to death position, ie laying down.
 		else {
-			GetComponent<Animator> ().SetBool ("die", true);
+			GetComponent<SpriteRenderer> ().color = deathColor;
 			target = Quaternion.Euler(0,0,90);
 		}
 		transform.rotation = Quaternion.RotateTowards(transform.rotation, target, step);
@@ -93,7 +93,7 @@ public class Combatant : MonoBehaviour {
 	void Update () {
 
 		//if possessed, assign the player's possession to the current game object
-		if (possesed) Player.possessedEnemy = gameObject;
+		if (possessed) Player.possessedEnemy = gameObject;
 
 		//check for corpse status, if true, then animate the death, otherwise maintain erection, hehe...
 		deathAnim (!corpse);
@@ -101,13 +101,20 @@ public class Combatant : MonoBehaviour {
 		if (health <= 0) {
 			//before corpse, raise the corpse count, else it gets mixed up with the start_mourner
 			if(!corpse) {
-				corpseCount++;
+				corpseCount+=1;
 				#if UNITY_EDITOR
 				Debug.Log("Despawned: New corpse count is " + corpseCount);
 				#endif
-
 				timerActivate = true;
 			}
+			//if possessed then corpse, remove possession and related flags
+			if (possessed) {
+				SendMessage("GetPossessed", false);
+				if(Player.possessedEnemy == gameObject) Player.possessedEnemy = null;
+				Player.player.possessing = false;
+				Player.player.toggleStatus();
+			}
+			possessed = false;
 			corpse = true;
 			checkGhost();
 			startTimer(timerActivate);
@@ -115,13 +122,6 @@ public class Combatant : MonoBehaviour {
 		}
 
 		if (corpse) {
-			//if possessed then corpse, remove possession and related flags
-			if (possesed) {
-				possesed = false;
-				if(Player.possessedEnemy == gameObject) Player.possessedEnemy = null;
-				Player.player.possessing = false;
-				Player.player.toggleStatus();
-			}
 			if (destroyTimeout > 0) {
 				destroyTimeout -= Time.deltaTime;
 			} else {
@@ -132,7 +132,7 @@ public class Combatant : MonoBehaviour {
 				#endif
 
 				//if there are no corpses on the screen, nothing can happen
-				if(corpseCount <= 0 && Player.player.possessing == false) {
+				if(corpseCount < 0 && Player.player.possessing == false) {
 					Player.handGrab = false;
 					Application.LoadLevel("gameOvel");
 				}

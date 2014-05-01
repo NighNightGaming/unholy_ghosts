@@ -16,6 +16,7 @@ public class EnemyMove : MonoBehaviour
 	private Combatant combatant;
 	public float jumpTimer = 1.0f;
 	private Vector3 initFace;
+	private Animator anim;	
 	/// <summary>
 	/// Raises the level was loaded event.
 	/// </summary>
@@ -34,14 +35,16 @@ public class EnemyMove : MonoBehaviour
 		allEnemies.Add (this);
 		combatant = GetComponent<Combatant> ();
 		initFace = new Vector2 (transform.localScale.x * -1, transform.localScale.y);
+		anim = GetComponent<Animator> ();
+
 	}
 
 	/// <summary>
 	/// sets the possessed flag
 	/// </summary>
-	void GetPossessed ()
+	void GetPossessed (bool possession)
 	{
-		possessed = true;
+		possessed = possession;
 	}
 	/// <summary>
 	/// Flip the sprite on the x, allowing for facing left/right.
@@ -83,13 +86,16 @@ public class EnemyMove : MonoBehaviour
 						transform.localScale = new Vector2 (-0.2f, 0.2f);
 				}
 				if (Mathf.Abs (xDiff) > closeToDist) {
-						rigidbody2D.AddForce (new Vector2 (Mathf.Sign (xDiff) * moveForce, 0));
+				rigidbody2D.AddForce (new Vector2 (Mathf.Sign (xDiff) * moveForce, 0));
+					anim.SetBool("walking", true);
+				} else {
+					anim.SetBool("walking", false);
 				}
 				// Causin' problems
-		foreach (EnemyMove other in allEnemies) {
-			if (other != null && other != this && other.avoidanceClass == avoidanceClass && other.combatant.corpse == false) {
-				rigidbody2D.AddForce ((other.transform.position - transform.position).normalized * -1 * repulsionForce / (other.transform.position - transform.position).sqrMagnitude);
-			}
+				foreach (EnemyMove other in allEnemies) {
+					if (other != null && other != this && other.avoidanceClass == avoidanceClass && other.combatant.corpse == false) {
+						rigidbody2D.AddForce ((other.transform.position - transform.position).normalized * -1 * repulsionForce / (other.transform.position - transform.position).sqrMagnitude);
+					}
 			}
 
 		} else if (!combatant.corpse && possessed) {
@@ -113,7 +119,7 @@ public class EnemyMove : MonoBehaviour
 				} else {
 						if (Input.GetKey ("up")) {
 								//+= allows for momentum
-								rigidbody2D.velocity = (new Vector2 (0.0f, 5f));
+								rigidbody2D.velocity += (new Vector2 (0.0f, 5f));
 								jumpTimer = 1.0f;
 						}
 				}
