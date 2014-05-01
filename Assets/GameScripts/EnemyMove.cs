@@ -98,12 +98,12 @@ public class EnemyMove : MonoBehaviour
 				gameObject.tag = "Player";
 				allEnemies.Remove (this);
 				if (h < 0) {
-						rigidbody2D.AddForce (new Vector2 (-20f - 5 * Mathf.Sin (Time.time * 6), 0.0f));
+				rigidbody2D.AddForce (new Vector2 (-20f - 5 * Mathf.Sin (Time.time * 6), 0.0f));
 						if (facingRight) {
 								flip ();
 						}
 				} else if (h > 0) {
-						rigidbody2D.AddForce (new Vector2 (20f + 5 * Mathf.Sin (Time.time * 6), 0.0f));
+				rigidbody2D.AddForce (new Vector2 (20f + 5 * Mathf.Sin (Time.time * 6), 0.0f));
 						if (!facingRight) {
 								flip ();
 						}
@@ -113,7 +113,7 @@ public class EnemyMove : MonoBehaviour
 				} else {
 						if (Input.GetKey ("up")) {
 								//+= allows for momentum
-								rigidbody2D.velocity += new Vector2 (0.0f, 5.0f);
+								rigidbody2D.velocity = (new Vector2 (0.0f, 5f));
 								jumpTimer = 1.0f;
 						}
 				}
