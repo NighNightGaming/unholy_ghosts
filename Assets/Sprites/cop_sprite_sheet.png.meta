@@ -50,7 +50,7 @@ TextureImporter:
         serializedVersion: 2
         x: 231
         y: 0
-        width: 503
+        width: 756
         height: 1002
       alignment: 0
       pivot: {x: .5, y: .5}
@@ -62,7 +62,7 @@ TextureImporter:
         width: 43
         height: 79
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
     - name: cop_sprite_sheet_2
       rect:
         serializedVersion: 2
@@ -71,7 +71,7 @@ TextureImporter:
         width: 129
         height: 167
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
     - name: cop-idle
       rect:
         serializedVersion: 2

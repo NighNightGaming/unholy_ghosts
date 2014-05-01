@@ -42,7 +42,9 @@ public class Attacking : MonoBehaviour
 			EnemyMove em = GetComponent<EnemyMove>();
 			if (em.mobTarget != null && this != null) {
 				if(Mathf.Abs(em.mobTarget.transform.position.x - transform.position.x) 
-				   <= attackRange && em.mobTarget != Player.player.GetComponent<Transform>()) Attack();
+				   <= attackRange && em.mobTarget != Player.player.GetComponent<Transform>()) {
+					Attack();
+				}
 			}
 		}
 	}
@@ -56,8 +58,10 @@ public class Attacking : MonoBehaviour
 	
 	void Attack ()
 	{
-		if (attackTimer > 0)
+		if (attackTimer > 0) {
 			return;
+		}
+		gameObject.GetComponent<Animator> ().SetTrigger("attackNow");
 		attackTimer = attackFreq;	
 		RaycastHit2D hit = Physics2D.Raycast (transform.position, dir, attackRange, targetLayers);
 		audio.Play ();

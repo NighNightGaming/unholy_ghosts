@@ -79,9 +79,11 @@ public class Combatant : MonoBehaviour {
 
 		if (revive) {
 			target = Quaternion.Euler(0,0,0);
+			GetComponent<Animator> ().SetBool ("die", false);
 		} 
 		//tween to death position, ie laying down.
 		else {
+			GetComponent<Animator> ().SetBool ("die", true);
 			target = Quaternion.Euler(0,0,90);
 		}
 		transform.rotation = Quaternion.RotateTowards(transform.rotation, target, step);
