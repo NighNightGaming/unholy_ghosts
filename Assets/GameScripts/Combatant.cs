@@ -52,8 +52,8 @@ public class Combatant : MonoBehaviour {
 		float diffX = Mathf.Abs(Player.player.transform.position.x - transform.position.x);
 		float diffY = Mathf.Abs (Player.player.transform.position.y - transform.position.y);
 		//commentout the final condition to remove possessbuffer
-		//remove second comment to not allow multiple possessions
-		if (diffY < 1 && diffX < 1 /*&& !(Player.player.possessing) */&& Player.player.possessTimer <= 0f) {
+		//comment second position to not allow multiple possessions
+		if (diffY < 1 && diffX < 1 && !(Player.player.possessing) && Player.player.possessTimer <= 0f) {
 #if UNITY_EDITOR
 			Debug.Log("possession time!");
 #endif
