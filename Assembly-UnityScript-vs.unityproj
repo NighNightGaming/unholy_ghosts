@@ -54,6 +54,7 @@
      <Compile Include="Assets\MenuScripts\Play.js" />
      <Compile Include="Assets\MenuScripts\Retry.js" />
      <Compile Include="Assets\MenuScripts\Textcolor.js" />
+     <Compile Include="Assets\MenuScripts\cursor.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
