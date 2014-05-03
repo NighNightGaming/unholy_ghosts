@@ -19,6 +19,10 @@ public class Spawner : MonoBehaviour {
 	//declared as gameobjects because they will be destroyed in this script aswell
 	public GameObject mound;
 	public GameObject demon;
+	private GameObject demon1;
+	private GameObject mound1;
+	private GameObject demon2;
+	private GameObject mound2;
 
 	public SpawnSetting[] mournerRates;
 	public SpawnSetting[] copRates;
@@ -99,24 +103,36 @@ public class Spawner : MonoBehaviour {
 		//the player is a ghost again, ie not possessing, having died (as to avoid spawning upon load)
 		//and spawn is false to prevent too many of these spawning
 		//think of way of progressive difficulty.
-		if (Player.player.possessing == false && playerDeaths > 1 && spawn == false) {
-				float playerX = Player.player.transform.position.x;
-				spawn = true;
-				//offsets the spawn of the demon hands/mounds
-				offset = Random.Range (2.5f, 6.5f);
-				for (int x = 0; x < playerDeaths; x+= 1) {
-					if (x % 2 == 0) {
-							Instantiate (mound, new Vector3 (playerX + offset, -3.140015f, 0), Quaternion.identity);
-							Instantiate (demon, new Vector3 (playerX + offset, -4.505769f, 0), Quaternion.Euler (0, 0, -90));
-					} else {
-							Instantiate (mound, new Vector3 (playerX - offset, -3.140015f, 0), Quaternion.identity);
-							Instantiate (demon, new Vector3 (playerX - offset, -4.505769f, 0), Quaternion.Euler (0, 0, -90));
-					}
-				}
+		if (!Player.player.possessing && playerDeaths > 1 && spawn == false) {
+			float playerX = Player.player.transform.position.x;
+			spawn = true;
+			//offsets the spawn of the demon hands/mounds
+			offset = Random.Range (2.5f, 4.5f);
+			if (!mound1 && !demon1 && !mound2 && !demon2) {
+				mound1 = (GameObject) Instantiate (mound, new Vector3 (playerX + offset, -3.140015f, 0), Quaternion.identity);
+				demon1 = (GameObject) Instantiate (demon, new Vector3 (playerX + offset, -4.505769f, 0), Quaternion.Euler (0, 0, -90));
+				mound2 = (GameObject) Instantiate (mound, new Vector3 (playerX - offset, -3.140015f, 0), Quaternion.identity);
+				demon2 = (GameObject) Instantiate (demon, new Vector3 (playerX - offset, -4.505769f, 0), Quaternion.Euler (0, 0, -90));
 			}
+			else {
+				mound1.transform.position = new Vector3 (playerX + offset, -3.140015f, 0);
+				demon1.transform.position = new Vector3 (playerX + offset, -4.505769f, 0);
+				mound2.transform.position = new Vector3 (playerX - offset, -3.140015f, 0);
+				demon2.transform.position = new Vector3 (playerX - offset, -4.505769f, 0);
+				mound1.SetActive(true);
+				demon1.SetActive(true);
+				mound2.SetActive(true);
+				demon2.SetActive(true);
+
+			}
+		}
 		//the relational operator effectively clips the amount of demon spawn to 5
-		else if (Player.player.possessing && spawn == true && playerDeaths < 3) {
-							spawn = false;
+		else if (Player.player.possessing && spawn == true) {
+			spawn = false;
+			mound1.SetActive(false);
+			demon1.SetActive(false);
+			mound2.SetActive(false);
+			demon2.SetActive(false);
 		}
 	}
 }

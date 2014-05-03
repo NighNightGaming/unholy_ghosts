@@ -55,6 +55,9 @@
      <Compile Include="Assets\GameScripts\corpseTimer.cs" />
      <Compile Include="Assets\GameScripts\killCounter.cs" />
      <Compile Include="Assets\MenuScripts\Reasoner.cs" />
+     <Compile Include="Assets\ZombieLordMode.cs" />
+     <Compile Include="Assets\highKillCount.cs" />
+     <Compile Include="Assets\highScore.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

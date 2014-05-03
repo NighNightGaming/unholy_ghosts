@@ -102,7 +102,8 @@ public class EnemyMove : MonoBehaviour
 
 		} else if (!combatant.corpse && possessed) {
 			//if not corpse, but possessed, give control to player.
-				Player.player.possessedPos = gameObject.transform.position;
+			//this makes the player spawn where there the combatant falls
+				//Player.player.possessedPos = gameObject.transform.position;
 				float h = Input.GetAxis ("Horizontal");
 				gameObject.tag = "Player";
 				allEnemies.Remove (this);

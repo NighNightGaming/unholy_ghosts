@@ -9,8 +9,9 @@ public class Attacking : MonoBehaviour
 	public float attackRange = 0.2f;
 	public float attackStr = 0.5f;
 	public float attackDmg = 20;
-	public float zombieDmgBoost = 1.5f;
+	public float zombieDmgBoost = 2f;
 	public float zombieStrBoost = 2f;
+	public float zombieRngBoost = 1.6f;
 	private float attackTimer = 0;
 	public float attackFreq = 0.5f;
 	public bool hasGun = false;
@@ -52,19 +53,31 @@ public class Attacking : MonoBehaviour
 			}
 		}
 	}
+
+	void ApplyBonus(bool possession) {
+		if (possession) {
+			attackDmg *= zombieDmgBoost;
+			attackStr *= zombieStrBoost;
+			attackRange *= zombieRngBoost;
+		} else {
+			attackDmg /= zombieDmgBoost;
+			attackStr /= zombieStrBoost;
+			attackRange /= zombieRngBoost;
+		}
+	}
 	
 	void GetPossessed (bool possession)
 	{
 		possessed = possession;
 		targetLayers = 1 << LayerMask.NameToLayer ("Enemy");
 		gameObject.layer = LayerMask.NameToLayer ("Player");
-		//adding zombie bonus
-		if (possession) {
-			attackDmg *= zombieDmgBoost;
-			attackStr *= zombieStrBoost;
-		} else { //taking away zombie bonus
-			attackDmg /= zombieDmgBoost;
-			attackStr /= zombieStrBoost;
+		//adding zombie bonus, if the player is not in zombie lrod mode
+		if (!Player.ZOMBIELORD) {
+			if (possession) {
+					ApplyBonus (possession);
+			} else { //taking away zombie bonus
+					ApplyBonus (possession);
+			}
 		}
 	}
 	

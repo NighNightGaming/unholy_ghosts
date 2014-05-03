@@ -12,14 +12,18 @@ public class Combatant : MonoBehaviour {
 	public bool possessed = false;
 	public Color zombieColor = Color.cyan;
 	public Color deathColor = Color.green;
+	public int zombieLordStart = 10;
 	public float destroyTimeout = 5.0f;
 	private bool timerActivate;
 	private GameObject destroyTimer; 
+	public static int zombieCount = 0;
+	private Animator anim;
 
 	// Use this for initialization
 	void Start () {
 		//this is included to take into consideration the start_mourner
 		if (corpse) corpseCount += 1;
+		anim = GetComponent<Animator> ();
 	}
 	/// <summary>
 	/// This function changes the necesary components to have a possessed enemy:
@@ -30,17 +34,31 @@ public class Combatant : MonoBehaviour {
 	/// the timer is reset.
 	/// Destroy the  destroyTimer.
 	/// </summary>
-	void GetPossessed()
-	{	
-		corpseCount -= 1;
-		corpse = false;
-		possessed = true;
+	void GetPossessed(bool possession){	
+		possessed = possession;
+		if (possession) {
+			zombieCount += 1;
+			corpse = false;
+			corpseCount -= 1;
+			Destroy (destroyTimer);
+			///makes em somewhat tougher
+			health = maxHealth + 50;
+			#if UNITY_EDITOR
+			Debug.Log ("Possesed: Zombie count is " + zombieCount);
+			#endif
+		} else {
+			zombieCount -= 1;
+			corpse = true;
+			#if UNITY_EDITOR
+			Debug.Log ("Ejected: Zombie count is " + zombieCount);
+			#endif
+			if(Player.possessedEnemy == gameObject) Player.possessedEnemy = null;
+			Player.player.possessing = false;
+			Player.player.toggleStatus();
+		}
 		GetComponent<SpriteRenderer> ().color = zombieColor;
 		GetComponent<SpriteRenderer> ().sortingOrder = 2;	
 		destroyTimeout = 5.0f;
-		Destroy (destroyTimer);
-		///makes em somewhat tougher
-		health = maxHealth + 50;
 	}
 	/// <summary>
 	/// This function aquires the difference between the enemy's position and the players
@@ -53,12 +71,23 @@ public class Combatant : MonoBehaviour {
 		float diffY = Mathf.Abs (Player.player.transform.position.y - transform.position.y);
 		//commentout the final condition to remove possessbuffer
 		//comment second position to not allow multiple possessions
-		if (diffY < 1 && diffX < 1 && !(Player.player.possessing) && Player.player.possessTimer <= 0f) {
+		if (Player.player.kills < zombieLordStart) {
+			if (diffY < 1 && diffX < 1 && !(Player.player.possessing) /* && Player.player.possessTimer <= 0f*/) {
 #if UNITY_EDITOR
-			Debug.Log("possession time!");
+				Debug.Log ("possession time!");
 #endif
-			SendMessage("GetPossessed", true);
-			Player.player.possessing = true;
+				SendMessage ("GetPossessed", true);
+				Player.player.possessing = true;
+			}
+		} else {
+			if (diffY < 1 && diffX < 1  /*&& !(Player.player.possessing) && Player.player.possessTimer <= 0f*/) {
+				#if UNITY_EDITOR
+				Debug.Log ("possession time!");
+				#endif
+				SendMessage ("GetPossessed", true);
+				Player.player.possessing = true;
+				Player.ZOMBIELORD = true;
+			}
 		}
 	}
 
@@ -66,11 +95,12 @@ public class Combatant : MonoBehaviour {
 	/// This function instatiates the timer which appears above the corpses indicating their eventual demise
 	/// </summary>
 	/// <param name="timerActivate">If set to <c>true</c> then function instantiates a timer above the corpse.</param>
-	void startTimer (bool timerActivate) {
+	bool startTimer (bool timerActivate) {
 		if (timerActivate) {
 			destroyTimer = (GameObject) Instantiate(Timer, new Vector3(transform.position.x,transform.position.y + 0.5f, 0), Quaternion.identity);
 			destroyTimer.GetComponent<corpseTimer>().corpse = this;
 		}
+		return timerActivate = false;
 	}
 	/// <summary>
 	/// This function animates the death of the enemy by rotating them over the z axis.
@@ -105,28 +135,23 @@ public class Combatant : MonoBehaviour {
 		if (health <= 0) {
 			//before corpse, raise the corpse count, else it gets mixed up with the start_mourner
 			if(!corpse) {
-				corpseCount+=1;
+				corpse = true;
+				corpseCount +=1; 
 				#if UNITY_EDITOR
-				Debug.Log("Despawned: New corpse count is " + corpseCount);
+				Debug.Log("Died: New corpse count is " + corpseCount);
 				#endif
 				timerActivate = true;
 			}
 			//if possessed then corpse, remove possession and related flags
 			if (possessed) {
-				corpseCount+=1;
 				SendMessage("GetPossessed", false);
-				if(Player.possessedEnemy == gameObject) Player.possessedEnemy = null;
-				Player.player.possessing = false;
-				Player.player.toggleStatus();
 			}
-			possessed = false;
-			corpse = true;
 			checkGhost();
-			startTimer(timerActivate);
-			timerActivate = false;
+			timerActivate = startTimer(timerActivate);
 		}
 
 		if (corpse) {
+			anim.SetBool("walking", false);	
 			health = 0;
 			if (destroyTimeout > 0) {
 				destroyTimeout -= Time.deltaTime;
@@ -136,7 +161,6 @@ public class Combatant : MonoBehaviour {
 				#if UNITY_EDITOR
 					Debug.Log("Despawned: New corpse count is " + corpseCount);
 				#endif
-
 				//if there are no corpses on the screen, nothing can happen
 				if(corpseCount <= 0 && Player.player.possessing == false) {
 					Player.handGrab = false;

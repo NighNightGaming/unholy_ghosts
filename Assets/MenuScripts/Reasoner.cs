@@ -10,5 +10,6 @@ public class Reasoner : MonoBehaviour {
 				} else {
 			guiText.text = "No more corpses onscreen";
 				}
+		highScore.retry = true;
 	}
 }

@@ -9,13 +9,18 @@ public class Player : MonoBehaviour {
 	public string key = "ghost_sprite";
 	public static Player player;
 	public static GameObject possessedEnemy;
+	public float yOffset = 2f;
 	public Vector3 possessedPos;
 	public static bool handGrab;
+	public static bool ZOMBIELORD = false;
 	///The below variables bar the user from repossessing immediately after being ejected
 	//keep below corpseTimer (5.0f)
+	//to remove possessBuffer go to ln56 in Combantant.cs and (un)comment the last condition
+	//STATUS: OFF
 	public static float possessBuffer = 2.0f;
 	public float possessTimer;
 
+	/// this is the flag for the second and more play throughs to enable the high score
 	public Rect grabBounds;
 	
 	//allows for demon hand to grab.
@@ -42,8 +47,12 @@ public class Player : MonoBehaviour {
 	public void toggleStatus() {
 		if (gameObject.activeSelf) {
 			gameObject.SetActive(false);
-			possessTimer = possessBuffer;
+			//possessTimer = possessBuffer;
 		} else {
+			//this sets a y offeset for the respawn
+			//possessedPos.y += yOffset;
+			//commenting the following line makes the ghost spawn where it possessed,  
+			//other wise it gets spawned at the first spawn point of that body
 			transform.position = possessedPos;
 			gameObject.SetActive(true);
 			deaths += 1;
@@ -58,6 +67,9 @@ public class Player : MonoBehaviour {
 			toggleStatus();
 		} else if (possessTimer > -1){
 			possessTimer -= Time.deltaTime;
+		}
+		if (!possessing) {
+			gameObject.SetActive(true);
 		}
 		if (gameOvel) {
 			Application.LoadLevel("gameOvel");
