@@ -1,7 +1,6 @@
 TODO:
-Mechanics:
-3. perhaps super zombie
-4. health status
+UX:
+1. How-to pane
 Network:
 1. Leaderboard
 

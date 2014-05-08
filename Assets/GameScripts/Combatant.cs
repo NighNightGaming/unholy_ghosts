@@ -166,6 +166,7 @@ public class Combatant : MonoBehaviour {
 					Player.handGrab = false;
 					Application.LoadLevel("gameOvel");
 				}
+				Spawner.enemiesOnScreen -= 1;
 				Destroy (destroyTimer);
 				Destroy(gameObject);
 			}
